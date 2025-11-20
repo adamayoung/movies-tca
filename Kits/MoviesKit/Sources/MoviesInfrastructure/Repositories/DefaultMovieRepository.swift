@@ -17,7 +17,7 @@ final class DefaultMovieRepository: MovieRepository {
         self.remoteDataSource = remoteDataSource
     }
 
-    func movie(withID id: Int) async throws(MovieRepositoryError) -> MoviesDomain.Movie {
+    func movie(withID id: Int) async throws(MovieRepositoryError) -> MovieEntity {
         let movie = try await remoteDataSource.movie(withID: id)
         return movie
     }

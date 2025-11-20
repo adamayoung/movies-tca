@@ -5,7 +5,6 @@
 //  Created by Adam Young on 18/11/2025.
 //
 
-import CoreInterfaces
 import Foundation
 import PeopleDomain
 import TMDb

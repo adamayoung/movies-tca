@@ -23,6 +23,7 @@ let package = Package(
             url: "https://github.com/pointfreeco/swift-composable-architecture.git", from: "1.23.1"),
         .package(path: "../../Kits/TVKit"),
         .package(path: "../../Kits/ConfigurationKit"),
+        .package(path: "../../Core/CoreDomain"),
         .package(path: "../../TMDbAdapters")
     ],
 
@@ -32,6 +33,7 @@ let package = Package(
             dependencies: [
                 .product(name: "TVApplication", package: "TVKit"),
                 .product(name: "ConfigurationApplication", package: "ConfigurationKit"),
+                "CoreDomain",
                 "TMDbAdapters",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
             ]

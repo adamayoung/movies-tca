@@ -44,7 +44,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				CoreDomain,
-				CoreInterfaces,
 				DesignSystem,
 			);
 			target = 664551852ECB7C2100250D87 /* MoviesTCA */;

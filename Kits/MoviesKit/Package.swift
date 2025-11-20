@@ -22,7 +22,6 @@ let package = Package(
 
     dependencies: [
         .package(path: "../../Core/CoreDomain"),
-        .package(path: "../../Core/CoreInterfaces"),
         .package(url: "https://github.com/adamayoung/TMDb.git", from: "13.3.0")
     ],
 
@@ -56,7 +55,6 @@ let package = Package(
             name: "MoviesInfrastructure",
             dependencies: [
                 "MoviesDomain",
-                "CoreInterfaces",
                 "TMDb"
             ]
         ),

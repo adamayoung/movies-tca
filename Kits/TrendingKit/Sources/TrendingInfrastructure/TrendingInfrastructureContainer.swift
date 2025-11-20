@@ -5,7 +5,6 @@
 //  Created by Adam Young on 28/05/2025.
 //
 
-import CoreInterfaces
 import Foundation
 import TMDb
 import TrendingDomain

@@ -7,7 +7,6 @@
 
 import ConfigurationDomain
 import CoreDomain
-import CoreInterfaces
 import Foundation
 
 final class DefaultAppConfigurationProvider: AppConfigurationProvider {

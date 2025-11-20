@@ -5,7 +5,6 @@
 //  Created by Adam Young on 15/10/2025.
 //
 
-import CoreInterfaces
 import Foundation
 import MoviesDomain
 import MoviesInfrastructure
@@ -14,11 +13,11 @@ import TMDb
 public final class MoviesContainer {
 
     private let movieService: any MovieService
-    private let appConfigurationProvider: any AppConfigurationProvider
+    private let appConfigurationProvider: any AppConfigurationProviding
 
-    public init(
+    init(
         movieService: some MovieService,
-        appConfigurationProvider: some AppConfigurationProvider
+        appConfigurationProvider: some AppConfigurationProviding
     ) {
         self.movieService = movieService
         self.appConfigurationProvider = appConfigurationProvider
@@ -27,7 +26,10 @@ public final class MoviesContainer {
     public func makeFetchMovieUseCase() -> some FetchMovieUseCase {
         let repository = makeMovieRepository()
 
-        return DefaultFetchMovieUseCase(repository: repository)
+        return DefaultFetchMovieUseCase(
+            repository: repository,
+            appConfigurationProvider: appConfigurationProvider
+        )
     }
 
 }
@@ -35,10 +37,7 @@ public final class MoviesContainer {
 extension MoviesContainer {
 
     private func makeMovieRepository() -> MovieRepository {
-        MoviesInfrastructureContainer.makeMovieRepository(
-            movieService: movieService,
-            appConfigurationProvider: appConfigurationProvider
-        )
+        MoviesInfrastructureContainer.makeMovieRepository(movieService: movieService)
     }
 
 }

@@ -19,18 +19,32 @@ public enum FetchMovieError: Error {
 extension FetchMovieError {
 
     init(_ error: Error) {
-        guard let movieRepositoryError = error as? MovieRepositoryError else {
-            self = .unknown(error)
+        if let movieRepositoryError = error as? MovieRepositoryError {
+            self.init(movieRepositoryError)
             return
         }
 
-        self.init(movieRepositoryError)
+        if let appConfigurationProviderError = error as? AppConfigurationProviderError {
+            self.init(appConfigurationProviderError)
+            return
+        }
+
+        self = .unknown(error)
     }
 
     init(_ error: MovieRepositoryError) {
         switch error {
         case .notFound:
             self = .notFound
+        case .unauthorised:
+            self = .unauthorised
+        case .unknown(let error):
+            self = .unknown(error)
+        }
+    }
+
+    init(_ error: AppConfigurationProviderError) {
+        switch error {
         case .unauthorised:
             self = .unauthorised
         case .unknown(let error):

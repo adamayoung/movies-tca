@@ -5,7 +5,6 @@
 //  Created by Adam Young on 15/10/2025.
 //
 
-import CoreInterfaces
 import Foundation
 import PeopleDomain
 import PeopleInfrastructure
@@ -14,11 +13,11 @@ import TMDb
 public final class PeopleContainer {
 
     private let personService: any PersonService
-    private let appConfigurationProvider: any AppConfigurationProvider
+    private let appConfigurationProvider: any AppConfigurationProviding
 
     public init(
         personService: some PersonService,
-        appConfigurationProvider: some AppConfigurationProvider
+        appConfigurationProvider: some AppConfigurationProviding
     ) {
         self.personService = personService
         self.appConfigurationProvider = appConfigurationProvider

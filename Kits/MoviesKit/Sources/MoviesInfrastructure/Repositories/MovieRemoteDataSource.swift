@@ -10,6 +10,6 @@ import MoviesDomain
 
 protocol MovieRemoteDataSource: Sendable {
 
-    func movie(withID id: Int) async throws(MovieRepositoryError) -> Movie
+    func movie(withID id: Int) async throws(MovieRepositoryError) -> MovieEntity
 
 }

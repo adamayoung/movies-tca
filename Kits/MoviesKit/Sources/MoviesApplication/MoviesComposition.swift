@@ -1,0 +1,27 @@
+//
+//  MoviesComposition.swift
+//  MoviesKit
+//
+//  Created by Adam Young on 20/11/2025.
+//
+
+import Foundation
+import MoviesDomain
+import MoviesInfrastructure
+import TMDb
+
+public struct MoviesComposition {
+
+    private init() {}
+
+    public static func makeMoviesContainer(
+        tmdb: TMDbClient,
+        appConfigurationProvider: some AppConfigurationProviding
+    ) -> MoviesContainer {
+        MoviesContainer(
+            movieService: tmdb.movies,
+            appConfigurationProvider: appConfigurationProvider
+        )
+    }
+
+}

@@ -7,7 +7,6 @@
 
 import ConfigurationDomain
 import ConfigurationInfrastructure
-import CoreInterfaces
 import Foundation
 import TMDb
 

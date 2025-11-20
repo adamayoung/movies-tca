@@ -1,14 +1,14 @@
 //
-//  AppConfigurationProvider.swift
-//  CoreInterfaces
+//  AppConfigurationProviding.swift
+//  TrendingKit
 //
-//  Created by Adam Young on 10/06/2025.
+//  Created by Adam Young on 20/11/2025.
 //
 
 import CoreDomain
 import Foundation
 
-public protocol AppConfigurationProvider: Sendable {
+public protocol AppConfigurationProviding: Sendable {
 
     func appConfiguration() async throws(AppConfigurationProviderError) -> AppConfiguration
 

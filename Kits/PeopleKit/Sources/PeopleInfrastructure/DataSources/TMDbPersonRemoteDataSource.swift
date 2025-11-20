@@ -6,7 +6,6 @@
 //
 
 import CoreDomain
-import CoreInterfaces
 import Foundation
 import PeopleDomain
 import TMDb

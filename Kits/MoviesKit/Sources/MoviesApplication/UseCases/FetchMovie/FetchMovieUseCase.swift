@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import MoviesDomain
 
 public protocol FetchMovieUseCase: Sendable {
 

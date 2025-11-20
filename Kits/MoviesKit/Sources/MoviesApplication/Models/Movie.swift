@@ -2,10 +2,9 @@
 //  Movie.swift
 //  MoviesKit
 //
-//  Created by Adam Young on 28/05/2025.
+//  Created by Adam Young on 20/11/2025.
 //
 
-import CoreDomain
 import Foundation
 
 public struct Movie: Identifiable, Equatable, Sendable {

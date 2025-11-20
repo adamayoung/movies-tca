@@ -6,7 +6,6 @@
 //
 
 import CoreDomain
-import CoreInterfaces
 import Foundation
 import MoviesDomain
 import TMDb
@@ -14,17 +13,12 @@ import TMDb
 final class TMDbMovieRemoteDataSource: MovieRemoteDataSource {
 
     private let movieService: any TMDb.MovieService
-    private let appConfigurationProvider: any AppConfigurationProvider
 
-    init(
-        movieService: some TMDb.MovieService,
-        appConfigurationProvider: some AppConfigurationProvider
-    ) {
+    init(movieService: some TMDb.MovieService) {
         self.movieService = movieService
-        self.appConfigurationProvider = appConfigurationProvider
     }
 
-    func movie(withID id: Int) async throws(MovieRepositoryError) -> MoviesDomain.Movie {
+    func movie(withID id: Int) async throws(MovieRepositoryError) -> MovieEntity {
         let tmdbMovie: TMDb.Movie
         do {
             tmdbMovie = try await movieService.details(forMovie: id, language: "en")
@@ -32,14 +26,7 @@ final class TMDbMovieRemoteDataSource: MovieRemoteDataSource {
             throw MovieRepositoryError(error)
         }
 
-        let imagesConfiguration: CoreDomain.ImagesConfiguration
-        do {
-            imagesConfiguration = try await appConfigurationProvider.appConfiguration().images
-        } catch let error {
-            throw MovieRepositoryError(error)
-        }
-
-        let mapper = MovieMapper(imagesConfiguration: imagesConfiguration)
+        let mapper = MovieEntityMapper()
         let movie = mapper.map(tmdbMovie)
 
         return movie
