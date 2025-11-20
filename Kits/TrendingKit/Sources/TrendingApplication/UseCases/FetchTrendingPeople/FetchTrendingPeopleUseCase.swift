@@ -1,0 +1,17 @@
+//
+//  FetchTrendingPeopleUseCase.swift
+//  TrendingKit
+//
+//  Created by Adam Young on 09/06/2025.
+//
+
+import CoreDomain
+import Foundation
+
+public protocol FetchTrendingPeopleUseCase: Sendable {
+
+    func execute() async throws(FetchTrendingPeopleError) -> [PersonListItem]
+
+    func execute(page: Int) async throws(FetchTrendingPeopleError) -> [PersonListItem]
+
+}

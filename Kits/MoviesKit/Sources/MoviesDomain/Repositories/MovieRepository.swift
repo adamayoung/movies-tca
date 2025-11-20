@@ -1,0 +1,22 @@
+//
+//  MovieRepository.swift
+//  MoviesKit
+//
+//  Created by Adam Young on 18/11/2025.
+//
+
+import Foundation
+
+public protocol MovieRepository: Sendable {
+
+    func movie(withID id: Int) async throws(MovieRepositoryError) -> Movie
+
+}
+
+public enum MovieRepositoryError: Error {
+
+    case notFound
+    case unauthorised
+    case unknown(Error? = nil)
+
+}

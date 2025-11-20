@@ -1,0 +1,17 @@
+//
+//  FetchTrendingMoviesUseCase.swift
+//  TrendingKit
+//
+//  Created by Adam Young on 03/06/2025.
+//
+
+import CoreDomain
+import Foundation
+
+public protocol FetchTrendingMoviesUseCase: Sendable {
+
+    func execute() async throws(FetchTrendingMoviesError) -> [MovieListItem]
+
+    func execute(page: Int) async throws(FetchTrendingMoviesError) -> [MovieListItem]
+
+}

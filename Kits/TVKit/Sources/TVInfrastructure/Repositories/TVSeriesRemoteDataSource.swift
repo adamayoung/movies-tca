@@ -1,0 +1,15 @@
+//
+//  TVSeriesRemoteDataSource.swift
+//  TVKit
+//
+//  Created by Adam Young on 18/11/2025.
+//
+
+import Foundation
+import TVDomain
+
+protocol TVSeriesRemoteDataSource: Sendable {
+
+    func tvSeries(withID id: Int) async throws(TVSeriesRepositoryError) -> TVSeries
+
+}
