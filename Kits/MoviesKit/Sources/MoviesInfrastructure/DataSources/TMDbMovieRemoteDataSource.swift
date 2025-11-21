@@ -18,7 +18,7 @@ final class TMDbMovieRemoteDataSource: MovieRemoteDataSource {
         self.movieService = movieService
     }
 
-    func movie(withID id: Int) async throws(MovieRepositoryError) -> MovieEntity {
+    func movie(withID id: Int) async throws(MovieRepositoryError) -> MoviesDomain.Movie {
         let tmdbMovie: TMDb.Movie
         do {
             tmdbMovie = try await movieService.details(forMovie: id, language: "en")
@@ -26,7 +26,7 @@ final class TMDbMovieRemoteDataSource: MovieRemoteDataSource {
             throw MovieRepositoryError(error)
         }
 
-        let mapper = MovieEntityMapper()
+        let mapper = MovieMapper()
         let movie = mapper.map(tmdbMovie)
 
         return movie

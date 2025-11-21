@@ -13,13 +13,15 @@ struct AppRootFeature {
 
     @ObservableState
     struct State {
-        var selectedTab: Tab = .movies
+        var selectedTab: Tab = .explore
+        var explore = ExploreRootFeature.State()
         var movies = MoviesRootFeature.State()
         var tvSeries = TVSeriesRootFeature.State()
         var people = PeopleRootFeature.State()
     }
 
     enum Tab {
+        case explore
         case movies
         case tvSeries
         case people
@@ -27,6 +29,7 @@ struct AppRootFeature {
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        case explore(ExploreRootFeature.Action)
         case movies(MoviesRootFeature.Action)
         case tvSeries(TVSeriesRootFeature.Action)
         case people(PeopleRootFeature.Action)
@@ -34,6 +37,7 @@ struct AppRootFeature {
 
     var body: some Reducer<State, Action> {
         BindingReducer()
+        Scope(state: \.explore, action: \.explore) { ExploreRootFeature() }
         Scope(state: \.movies, action: \.movies) { MoviesRootFeature() }
         Scope(state: \.tvSeries, action: \.tvSeries) { TVSeriesRootFeature() }
         Scope(state: \.people, action: \.people) { PeopleRootFeature() }

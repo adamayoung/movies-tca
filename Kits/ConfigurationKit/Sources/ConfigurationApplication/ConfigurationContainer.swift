@@ -6,38 +6,18 @@
 //
 
 import ConfigurationDomain
-import ConfigurationInfrastructure
 import Foundation
-import TMDb
 
 public final class ConfigurationContainer {
 
-    private let configurationService: any ConfigurationService
+    private let configurationRepository: any ConfigurationRepository
 
-    public init(configurationService: some ConfigurationService) {
-        self.configurationService = configurationService
+    init(configurationRepository: some ConfigurationRepository) {
+        self.configurationRepository = configurationRepository
     }
 
     public func makeFetchAppConfigurationUseCase() -> some FetchAppConfigurationUseCase {
-        let repository = makeConfigurationRepository()
-
-        return DefaultFetchAppConfigurationUseCase(repository: repository)
-    }
-
-    public func makeAppConfigurationProvider() -> some AppConfigurationProvider {
-        let repository = makeConfigurationRepository()
-
-        return DefaultAppConfigurationProvider(repository: repository)
-    }
-
-}
-
-extension ConfigurationContainer {
-
-    private func makeConfigurationRepository() -> ConfigurationRepository {
-        ConfigurationInfrastructureContainer.makeConfigurationRepository(
-            configurationService: configurationService
-        )
+       DefaultFetchAppConfigurationUseCase(repository: configurationRepository)
     }
 
 }

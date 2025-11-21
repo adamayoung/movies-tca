@@ -13,17 +13,12 @@ import TrendingDomain
 final class TMDbTrendingRemoteDataSource: TrendingRemoteDataSource {
 
     private let trendingService: any TrendingService
-    private let appConfigurationProvider: any AppConfigurationProvider
 
-    init(
-        trendingService: some TrendingService,
-        appConfigurationProvider: any AppConfigurationProvider
-    ) {
+    init(trendingService: some TrendingService) {
         self.trendingService = trendingService
-        self.appConfigurationProvider = appConfigurationProvider
     }
 
-    func movies(page: Int) async throws(TrendingRepositoryError) -> [CoreDomain.MovieListItem] {
+    func movies(page: Int) async throws(TrendingRepositoryError) -> [MoviePreview] {
         let tmdbMovies: MoviePageableList
         do {
             tmdbMovies = try await trendingService.movies(
@@ -35,20 +30,13 @@ final class TMDbTrendingRemoteDataSource: TrendingRemoteDataSource {
             throw TrendingRepositoryError(error)
         }
 
-        let imagesConfiguration: CoreDomain.ImagesConfiguration
-        do {
-            imagesConfiguration = try await appConfigurationProvider.appConfiguration().images
-        } catch let error {
-            throw TrendingRepositoryError(error)
-        }
-
-        let mapper = MovieListItemMapper(imagesConfiguration: imagesConfiguration)
+        let mapper = MoviePreviewMapper()
         return tmdbMovies.results.map(mapper.map)
     }
 
     func tvSeries(
         page: Int
-    ) async throws(TrendingRepositoryError) -> [CoreDomain.TVSeriesListItem] {
+    ) async throws(TrendingRepositoryError) -> [TVSeriesPreview] {
         let tmdbTVSeries: TVSeriesPageableList
         do {
             tmdbTVSeries = try await trendingService.tvSeries(
@@ -60,20 +48,13 @@ final class TMDbTrendingRemoteDataSource: TrendingRemoteDataSource {
             throw TrendingRepositoryError(error)
         }
 
-        let imagesConfiguration: CoreDomain.ImagesConfiguration
-        do {
-            imagesConfiguration = try await appConfigurationProvider.appConfiguration().images
-        } catch let error {
-            throw TrendingRepositoryError(error)
-        }
-
-        let mapper = TVSeriesListItemMapper(imagesConfiguration: imagesConfiguration)
+        let mapper = TVSeriesPreviewMapper()
         return tmdbTVSeries.results.map(mapper.map)
     }
 
     func people(
         page: Int
-    ) async throws(TrendingRepositoryError) -> [CoreDomain.PersonListItem] {
+    ) async throws(TrendingRepositoryError) -> [PersonPreview] {
         let tmdbPeople: PersonPageableList
         do {
             tmdbPeople = try await trendingService.people(
@@ -85,14 +66,7 @@ final class TMDbTrendingRemoteDataSource: TrendingRemoteDataSource {
             throw TrendingRepositoryError(error)
         }
 
-        let imagesConfiguration: CoreDomain.ImagesConfiguration
-        do {
-            imagesConfiguration = try await appConfigurationProvider.appConfiguration().images
-        } catch let error {
-            throw TrendingRepositoryError(error)
-        }
-
-        let mapper = PersonListItemMapper(imagesConfiguration: imagesConfiguration)
+        let mapper = PersonPreviewMapper()
         return tmdbPeople.results.map(mapper.map)
     }
 

@@ -14,12 +14,10 @@ package final class TVInfrastructureContainer {
     private init() {}
 
     package static func makeTVSeriesRepository(
-        tvSeriesService: some TVSeriesService,
-        appConfigurationProvider: some AppConfigurationProvider
+        tvSeriesService: some TVSeriesService
     ) -> some TVSeriesRepository {
         let remoteDataSource = Self.makeTVSeriesRemoteDataSource(
-            tvSeriesService: tvSeriesService,
-            appConfigurationProvider: appConfigurationProvider
+            tvSeriesService: tvSeriesService
         )
 
         return DefaultTVSeriesRepository(remoteDataSource: remoteDataSource)
@@ -30,13 +28,9 @@ package final class TVInfrastructureContainer {
 extension TVInfrastructureContainer {
 
     private static func makeTVSeriesRemoteDataSource(
-        tvSeriesService: some TVSeriesService,
-        appConfigurationProvider: some AppConfigurationProvider
+        tvSeriesService: some TVSeriesService
     ) -> some TVSeriesRemoteDataSource {
-        TMDbTVSeriesRemoteDataSource(
-            tvSeriesService: tvSeriesService,
-            appConfigurationProvider: appConfigurationProvider
-        )
+        TMDbTVSeriesRemoteDataSource(tvSeriesService: tvSeriesService)
     }
 
 }

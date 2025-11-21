@@ -10,8 +10,8 @@ import Foundation
 
 public protocol FetchTrendingMoviesUseCase: Sendable {
 
-    func execute() async throws(FetchTrendingMoviesError) -> [MovieListItem]
+    func execute() async throws(FetchTrendingMoviesError) -> [MoviePreviewDetails]
 
-    func execute(page: Int) async throws(FetchTrendingMoviesError) -> [MovieListItem]
+    func execute(page: Int) async throws(FetchTrendingMoviesError) -> [MoviePreviewDetails]
 
 }

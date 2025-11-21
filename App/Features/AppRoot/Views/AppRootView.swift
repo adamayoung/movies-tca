@@ -14,6 +14,15 @@ struct AppRootView: View {
 
     var body: some View {
         TabView(selection: $store.selectedTab) {
+            Tab("Home", systemImage: "house", value: AppRootFeature.Tab.explore) {
+                ExploreRootView(
+                    store: store.scope(
+                        state: \.explore,
+                        action: \.explore
+                    )
+                )
+            }
+            
             Tab("Movies", systemImage: "film", value: AppRootFeature.Tab.movies) {
                 MoviesRootView(
                     store: store.scope(

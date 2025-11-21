@@ -6,36 +6,24 @@
 //
 
 import Foundation
-import TMDb
 import TVDomain
-import TVInfrastructure
 
 public final class TVContainer {
 
-    private let tvSeriesService: any TVSeriesService
-    private let appConfigurationProvider: any AppConfigurationProvider
+    private let tvSeriesRepository: any TVSeriesRepository
+    private let appConfigurationProvider: any AppConfigurationProviding
 
-    public init(
-        tvSeriesService: some TVSeriesService,
-        appConfigurationProvider: some AppConfigurationProvider
+    init(
+        tvSeriesRepository: some TVSeriesRepository,
+        appConfigurationProvider: some AppConfigurationProviding
     ) {
-        self.tvSeriesService = tvSeriesService
+        self.tvSeriesRepository = tvSeriesRepository
         self.appConfigurationProvider = appConfigurationProvider
     }
 
-    public func makeFetchTVSeriesUseCase() -> some FetchTVSeriesUseCase {
-        let repository = makeTVSeriesRepository()
-
-        return DefaultFetchTVSeriesUseCase(repository: repository)
-    }
-
-}
-
-extension TVContainer {
-
-    private func makeTVSeriesRepository() -> TVSeriesRepository {
-        TVInfrastructureContainer.makeTVSeriesRepository(
-            tvSeriesService: tvSeriesService,
+    public func makeFetchTVSeriesDetailsUseCase() -> some FetchTVSeriesDetailsUseCase {
+        DefaultFetchTVSeriesDetailsUseCase(
+            repository: tvSeriesRepository,
             appConfigurationProvider: appConfigurationProvider
         )
     }

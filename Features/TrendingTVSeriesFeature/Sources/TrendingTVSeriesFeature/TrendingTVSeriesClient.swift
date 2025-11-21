@@ -1,6 +1,6 @@
 //
 //  TrendingTVSeriesClient.swift
-//  MoviesTCA
+//  TrendingTVSeriesFeature
 //
 //  Created by Adam Young on 18/11/2025.
 //
@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import Foundation
 import TrendingAdapters
+import TrendingApplication
 
 struct TrendingTVSeriesClient: Sendable {
 
@@ -20,18 +21,10 @@ extension TrendingTVSeriesClient: DependencyKey {
     static var liveValue: TrendingTVSeriesClient {
         TrendingTVSeriesClient(
             fetch: {
-                let fetchTrendingTVSeriesUseCase = DependencyValues._current.fetchTrendingTVSeries
-                let tvSeriesItems = try await fetchTrendingTVSeriesUseCase.execute()
-
-                let tvSeriesPreviews = tvSeriesItems.map {
-                    TVSeriesPreview(
-                        id: $0.id,
-                        name: $0.name,
-                        posterURL: $0.posterURLSet?.thumbnail
-                    )
-                }
-
-                return tvSeriesPreviews
+                let useCase = DependencyValues._current.fetchTrendingTVSeries
+                let tvSeriesPreviews = try await useCase.execute()
+                let mapper = TVSeriesPreviewMapper()
+                return tvSeriesPreviews.map(mapper.map)
             }
         )
     }

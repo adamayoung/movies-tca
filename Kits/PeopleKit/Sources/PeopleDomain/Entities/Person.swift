@@ -14,20 +14,20 @@ public struct Person: Identifiable, Equatable, Sendable {
     public let name: String
     public let knownForDepartment: String
     public let gender: Gender
-    public let profileURLSet: ImageURLSet?
+    public let profilePath: URL?
 
     public init(
         id: Int,
         name: String,
         knownForDepartment: String,
         gender: Gender,
-        profileURLSet: ImageURLSet? = nil
+        profilePath: URL? = nil
     ) {
         self.id = id
         self.name = name
         self.knownForDepartment = knownForDepartment
         self.gender = gender
-        self.profileURLSet = profileURLSet
+        self.profilePath = profilePath
     }
 
 }

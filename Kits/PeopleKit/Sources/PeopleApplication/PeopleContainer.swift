@@ -7,35 +7,23 @@
 
 import Foundation
 import PeopleDomain
-import PeopleInfrastructure
-import TMDb
 
 public final class PeopleContainer {
 
-    private let personService: any PersonService
+    private let personRepository: any PersonRepository
     private let appConfigurationProvider: any AppConfigurationProviding
 
-    public init(
-        personService: some PersonService,
+    init(
+        personRepository: some PersonRepository,
         appConfigurationProvider: some AppConfigurationProviding
     ) {
-        self.personService = personService
+        self.personRepository = personRepository
         self.appConfigurationProvider = appConfigurationProvider
     }
 
-    public func makeFetchPersonUseCase() -> some FetchPersonUseCase {
-        let repository = makePersonRepository()
-
-        return DefaultFetchPersonUseCase(repository: repository)
-    }
-
-}
-
-extension PeopleContainer {
-
-    private func makePersonRepository() -> PersonRepository {
-        PeopleInfrastructureContainer.makePersonRepository(
-            personService: personService,
+    public func makeFetchPersonDetailsUseCase() -> some FetchPersonDetailsUseCase {
+        DefaultFetchPersonDetailsUseCase(
+            repository: personRepository,
             appConfigurationProvider: appConfigurationProvider
         )
     }

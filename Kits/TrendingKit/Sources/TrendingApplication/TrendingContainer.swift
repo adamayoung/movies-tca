@@ -6,48 +6,38 @@
 //
 
 import Foundation
-import TMDb
 import TrendingDomain
-import TrendingInfrastructure
 
 public final class TrendingContainer {
 
-    private let trendingService: any TrendingService
-    private let appConfigurationProvider: any AppConfigurationProvider
+    private let trendingRepository: any TrendingRepository
+    private let appConfigurationProvider: any AppConfigurationProviding
 
-    public init(
-        trendingService: some TrendingService,
-        appConfigurationProvider: some AppConfigurationProvider
+    init(
+        trendingRepository: some TrendingRepository,
+        appConfigurationProvider: some AppConfigurationProviding
     ) {
-        self.trendingService = trendingService
+        self.trendingRepository = trendingRepository
         self.appConfigurationProvider = appConfigurationProvider
     }
 
     public func makeFetchTrendingMoviesUseCase() -> some FetchTrendingMoviesUseCase {
-        let repository = makeTrendingRepository()
-
-        return DefaultFetchTrendingMoviesUseCase(repository: repository)
+        DefaultFetchTrendingMoviesUseCase(
+            repository: trendingRepository,
+            appConfigurationProvider: appConfigurationProvider
+        )
     }
 
     public func makeFetchTrendingTVSeriesUseCase() -> some FetchTrendingTVSeriesUseCase {
-        let repository = makeTrendingRepository()
-
-        return DefaultFetchTrendingTVSeriesUseCase(repository: repository)
+        DefaultFetchTrendingTVSeriesUseCase(
+            repository: trendingRepository,
+            appConfigurationProvider: appConfigurationProvider
+        )
     }
 
     public func makeFetchTrendingPeopleUseCase() -> some FetchTrendingPeopleUseCase {
-        let repository = makeTrendingRepository()
-
-        return DefaultFetchTrendingPeopleUseCase(repository: repository)
-    }
-
-}
-
-extension TrendingContainer {
-
-    private func makeTrendingRepository() -> TrendingRepository {
-        TrendingInfrastructureContainer.makeTrendingRepository(
-            trendingService: trendingService,
+        DefaultFetchTrendingPeopleUseCase(
+            repository: trendingRepository,
             appConfigurationProvider: appConfigurationProvider
         )
     }

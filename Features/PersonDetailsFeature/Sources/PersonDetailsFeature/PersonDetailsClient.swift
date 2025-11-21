@@ -21,25 +21,10 @@ extension PersonDetailsClient: DependencyKey {
     static var liveValue: PersonDetailsClient {
         PersonDetailsClient(
             fetch: { id in
-                let fetchPersonUseCase = DependencyValues._current.fetchPerson
-                let person = try await fetchPersonUseCase.execute(id: id)
-
-                let gender: Gender = {
-                    switch person.gender {
-                    case .unknown: .unknown
-                    case .female: .female
-                    case .male: .male
-                    case .other: .other
-                    }
-                }()
-
-                return Person(
-                    id: person.id,
-                    name: person.name,
-                    knownForDepartment: person.knownForDepartment,
-                    gender: gender,
-                    profileURL: person.profileURLSet?.detail
-                )
+                let useCase = DependencyValues._current.fetchPersonDetails
+                let person = try await useCase.execute(id: id)
+                let mapper = PersonMapper()
+                return mapper.map(person)
             }
         )
     }

@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import Foundation
 import TrendingAdapters
+import TrendingApplication
 
 struct TrendingPeopleClient: Sendable {
 
@@ -20,18 +21,10 @@ extension TrendingPeopleClient: DependencyKey {
     static var liveValue: TrendingPeopleClient {
         TrendingPeopleClient(
             fetch: {
-                let fetchTrendingPeopleUseCase = DependencyValues._current.fetchTrendingPeople
-                let personItems = try await fetchTrendingPeopleUseCase.execute()
-
-                let personPreviews = personItems.map {
-                    PersonPreview(
-                        id: $0.id,
-                        name: $0.name,
-                        profileURL: $0.profileURLSet?.thumbnail
-                    )
-                }
-
-                return personPreviews
+                let useCase = DependencyValues._current.fetchTrendingPeople
+                let personPreviews = try await useCase.execute()
+                let mapper = PersonPreviewMapper()
+                return personPreviews.map(mapper.map)
             }
         )
     }

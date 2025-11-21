@@ -14,13 +14,9 @@ package final class PeopleInfrastructureContainer {
     private init() {}
 
     package static func makePersonRepository(
-        personService: some PersonService,
-        appConfigurationProvider: some AppConfigurationProvider
+        personService: some PersonService
     ) -> some PersonRepository {
-        let remoteDataSource = Self.makePersonRemoteDataSource(
-            personService: personService,
-            appConfigurationProvider: appConfigurationProvider
-        )
+        let remoteDataSource = Self.makePersonRemoteDataSource(personService: personService)
 
         return DefaultPersonRepository(remoteDataSource: remoteDataSource)
     }
@@ -30,13 +26,9 @@ package final class PeopleInfrastructureContainer {
 extension PeopleInfrastructureContainer {
 
     private static func makePersonRemoteDataSource(
-        personService: some PersonService,
-        appConfigurationProvider: some AppConfigurationProvider
+        personService: some PersonService
     ) -> some PersonRemoteDataSource {
-        TMDbPersonRemoteDataSource(
-            personService: personService,
-            appConfigurationProvider: appConfigurationProvider
-        )
+        TMDbPersonRemoteDataSource(personService: personService)
     }
 
 }

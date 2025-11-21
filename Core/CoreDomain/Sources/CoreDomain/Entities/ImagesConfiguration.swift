@@ -1,5 +1,5 @@
 //
-//  ImagesConfiguration.swift
+//  ImagesConfigurationEntity.swift
 //  CoreDomain
 //
 //  Created by Adam Young on 10/06/2025.

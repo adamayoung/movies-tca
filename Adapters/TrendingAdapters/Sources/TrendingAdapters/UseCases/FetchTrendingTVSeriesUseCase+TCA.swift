@@ -15,18 +15,20 @@ enum FetchTrendingTVSeriesUseCaseKey: DependencyKey {
 
     static var liveValue: any FetchTrendingTVSeriesUseCase {
         let configurationService = DependencyValues._current.configurationService
-        let configurationContainer = ConfigurationContainer(
-            configurationService: configurationService
-        )
-        let appConfigurationProvider = configurationContainer.makeAppConfigurationProvider()
+        let fetchAppConfigurationUseCase = ConfigurationComposition
+            .makeConfigurationContainer(configurationService: configurationService)
+            .makeFetchAppConfigurationUseCase()
+        let appConfigurationProvider = AppConfigurationProviderAdapter(fetchUseCase: fetchAppConfigurationUseCase)
 
         let trendingService = DependencyValues._current.trendingService
-        let container = TrendingContainer(
-            trendingService: trendingService,
-            appConfigurationProvider: appConfigurationProvider
-        )
+        let useCase = TrendingComposition
+            .makeTrendingContainer(
+                trendingService: trendingService,
+                appConfigurationProvider: appConfigurationProvider
+            )
+            .makeFetchTrendingTVSeriesUseCase()
 
-        return container.makeFetchTrendingTVSeriesUseCase()
+        return useCase
     }
 
 }

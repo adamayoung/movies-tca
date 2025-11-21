@@ -1,6 +1,6 @@
 //
 //  TVSeriesPreview.swift
-//  MoviesTCA
+//  TrendingTVSeriesFeature
 //
 //  Created by Adam Young on 18/11/2025.
 //

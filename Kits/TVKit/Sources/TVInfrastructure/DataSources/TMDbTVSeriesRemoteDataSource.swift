@@ -13,14 +13,9 @@ import TVDomain
 final class TMDbTVSeriesRemoteDataSource: TVSeriesRemoteDataSource {
 
     private let tvSeriesService: any TVSeriesService
-    private let appConfigurationProvider: any AppConfigurationProvider
 
-    init(
-        tvSeriesService: any TVSeriesService,
-        appConfigurationProvider: some AppConfigurationProvider
-    ) {
+    init(tvSeriesService: any TVSeriesService) {
         self.tvSeriesService = tvSeriesService
-        self.appConfigurationProvider = appConfigurationProvider
     }
 
     func tvSeries(withID id: Int) async throws(TVSeriesRepositoryError) -> TVDomain.TVSeries {
@@ -31,14 +26,7 @@ final class TMDbTVSeriesRemoteDataSource: TVSeriesRemoteDataSource {
             throw TVSeriesRepositoryError(error)
         }
 
-        let imagesConfiguration: CoreDomain.ImagesConfiguration
-        do {
-            imagesConfiguration = try await appConfigurationProvider.appConfiguration().images
-        } catch let error {
-            throw TVSeriesRepositoryError(error)
-        }
-
-        let mapper = TVSeriesMapper(imagesConfiguration: imagesConfiguration)
+        let mapper = TVSeriesMapper()
         let tvSeries = mapper.map(tmdbTVSeries)
 
         return tvSeries

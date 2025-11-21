@@ -13,14 +13,9 @@ import TMDb
 final class TMDbPersonRemoteDataSource: PersonRemoteDataSource {
 
     private let personService: any TMDb.PersonService
-    private let appConfigurationProvider: any AppConfigurationProvider
 
-    init(
-        personService: some TMDb.PersonService,
-        appConfigurationProvider: some AppConfigurationProvider
-    ) {
+    init(personService: some TMDb.PersonService) {
         self.personService = personService
-        self.appConfigurationProvider = appConfigurationProvider
     }
 
     func person(withID id: Int) async throws(PersonRepositoryError) -> PeopleDomain.Person {
@@ -31,14 +26,7 @@ final class TMDbPersonRemoteDataSource: PersonRemoteDataSource {
             throw PersonRepositoryError(error)
         }
 
-        let imagesConfiguration: CoreDomain.ImagesConfiguration
-        do {
-            imagesConfiguration = try await appConfigurationProvider.appConfiguration().images
-        } catch let error {
-            throw PersonRepositoryError(error)
-        }
-
-        let mapper = PersonMapper(imagesConfiguration: imagesConfiguration)
+        let mapper = PersonMapper()
         let movie = mapper.map(tmdbPerson)
 
         return movie

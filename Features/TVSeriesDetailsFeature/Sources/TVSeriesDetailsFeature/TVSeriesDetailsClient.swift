@@ -21,14 +21,10 @@ extension TVSeriesDetailsClient: DependencyKey {
     static var liveValue: TVSeriesDetailsClient {
         TVSeriesDetailsClient(
             fetch: { id in
-                let fetchTVSeriesUseCase = DependencyValues._current.fetchTVSeries
-                let tvSeries = try await fetchTVSeriesUseCase.execute(id: id)
-
-                return TVSeries(
-                    id: tvSeries.id,
-                    name: tvSeries.name,
-                    posterURL: tvSeries.posterURLSet?.detail
-                )
+                let useCase = DependencyValues._current.fetchTVSeriesDetails
+                let tvSeries = try await useCase.execute(id: id)
+                let mapper = TVSeriesMapper()
+                return mapper.map(tvSeries)
             }
         )
     }
@@ -39,8 +35,8 @@ extension TVSeriesDetailsClient: DependencyKey {
                 TVSeries(
                     id: 66732,
                     name: "Stranger Things",
-                    posterURL: URL(
-                        string: "https://image.tmdb.org/t/p/w780/cVxVGwHce6xnW8UaVUggaPXbmoE.jpg")
+                    overview: "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces, and one strange little girl.",
+                    posterURL: URL(string: "https://image.tmdb.org/t/p/w780/cVxVGwHce6xnW8UaVUggaPXbmoE.jpg")
                 )
             }
         )

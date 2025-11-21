@@ -10,11 +10,11 @@ import Foundation
 
 public protocol TrendingRepository: Sendable {
 
-    func movies(page: Int) async throws(TrendingRepositoryError) -> [MovieListItem]
+    func movies(page: Int) async throws(TrendingRepositoryError) -> [MoviePreview]
 
-    func tvSeries(page: Int) async throws(TrendingRepositoryError) -> [TVSeriesListItem]
+    func tvSeries(page: Int) async throws(TrendingRepositoryError) -> [TVSeriesPreview]
 
-    func people(page: Int) async throws(TrendingRepositoryError) -> [PersonListItem]
+    func people(page: Int) async throws(TrendingRepositoryError) -> [PersonPreview]
 
 }
 

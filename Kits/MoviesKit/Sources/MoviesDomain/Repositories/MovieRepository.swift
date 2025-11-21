@@ -9,7 +9,7 @@ import Foundation
 
 public protocol MovieRepository: Sendable {
 
-    func movie(withID id: Int) async throws(MovieRepositoryError) -> MovieEntity
+    func movie(withID id: Int) async throws(MovieRepositoryError) -> Movie
 
 }
 

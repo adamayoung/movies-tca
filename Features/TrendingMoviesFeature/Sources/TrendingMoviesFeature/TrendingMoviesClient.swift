@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import Foundation
 import TrendingAdapters
+import TrendingApplication
 
 struct TrendingMoviesClient: Sendable {
 
@@ -20,18 +21,10 @@ extension TrendingMoviesClient: DependencyKey {
     static var liveValue: TrendingMoviesClient {
         TrendingMoviesClient(
             fetch: {
-                let fetchTrendingMoviesUseCase = DependencyValues._current.fetchTrendingMovies
-                let movieItems = try await fetchTrendingMoviesUseCase.execute()
-
-                let moviePreviews = movieItems.map {
-                    MoviePreview(
-                        id: $0.id,
-                        title: $0.title,
-                        posterURL: $0.posterURLSet?.thumbnail
-                    )
-                }
-
-                return moviePreviews
+                let useCase = DependencyValues._current.fetchTrendingMovies
+                let moviePreviews = try await useCase.execute()
+                let mapper = MoviePreviewMapper()
+                return moviePreviews.map(mapper.map)
             }
         )
     }

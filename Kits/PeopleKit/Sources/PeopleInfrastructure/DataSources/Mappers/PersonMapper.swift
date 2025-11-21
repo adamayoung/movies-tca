@@ -1,5 +1,5 @@
 //
-//  MovieMapper.swift
+//  PersonMapper.swift
 //  PeopleKit
 //
 //  Created by Adam Young on 29/05/2025.
@@ -12,21 +12,13 @@ import TMDb
 
 struct PersonMapper {
 
-    private let imagesConfiguration: CoreDomain.ImagesConfiguration
-
-    init(imagesConfiguration: CoreDomain.ImagesConfiguration) {
-        self.imagesConfiguration = imagesConfiguration
-    }
-
     func map(_ tmdbPerson: TMDb.Person) -> PeopleDomain.Person {
-        let profileURLSet = imagesConfiguration.profileURL(for: tmdbPerson.profilePath)
-
-        return PeopleDomain.Person(
+        PeopleDomain.Person(
             id: tmdbPerson.id,
             name: tmdbPerson.name,
             knownForDepartment: tmdbPerson.knownForDepartment ?? "",
             gender: map(tmdbPerson.gender),
-            profileURLSet: profileURLSet
+            profilePath: tmdbPerson.profilePath
         )
     }
 

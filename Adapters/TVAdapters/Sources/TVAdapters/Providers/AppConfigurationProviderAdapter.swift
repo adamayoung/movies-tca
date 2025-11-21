@@ -11,9 +11,9 @@ import TVDomain
 
 public struct AppConfigurationProviderAdapter: AppConfigurationProviding {
 
-    private let fetchUseCase: FetchAppConfigurationUseCase
+    private let fetchUseCase: any FetchAppConfigurationUseCase
 
-    public init(fetchUseCase: FetchAppConfigurationUseCase) {
+    public init(fetchUseCase: some FetchAppConfigurationUseCase) {
         self.fetchUseCase = fetchUseCase
     }
 

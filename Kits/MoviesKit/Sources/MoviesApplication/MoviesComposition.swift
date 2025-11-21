@@ -15,11 +15,13 @@ public struct MoviesComposition {
     private init() {}
 
     public static func makeMoviesContainer(
-        tmdb: TMDbClient,
+        movieService: some MovieService,
         appConfigurationProvider: some AppConfigurationProviding
     ) -> MoviesContainer {
-        MoviesContainer(
-            movieService: tmdb.movies,
+        let movieRepository = MoviesInfrastructureContainer.makeMovieRepository(movieService: movieService)
+        
+        return MoviesContainer(
+            movieRepository: movieRepository,
             appConfigurationProvider: appConfigurationProvider
         )
     }

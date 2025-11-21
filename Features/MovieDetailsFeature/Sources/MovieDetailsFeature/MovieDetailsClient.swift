@@ -21,16 +21,10 @@ extension MovieDetailsClient: DependencyKey {
     static var liveValue: MovieDetailsClient {
         MovieDetailsClient(
             fetch: { id in
-                let fetchMovieUseCase = DependencyValues._current.fetchMovie
-                let movie = try await fetchMovieUseCase.execute(id: id)
-
-                return Movie(
-                    id: movie.id,
-                    title: movie.title,
-                    overview: movie.overview ?? "",
-                    posterURL: movie.posterURLSet?.detail,
-                    backdropURL: movie.backdropURLSet?.full
-                )
+                let useCase = DependencyValues._current.fetchMovieDetails
+                let movie = try await useCase.execute(id: id)
+                let mapper = MovieMapper()
+                return mapper.map(movie)
             }
         )
     }

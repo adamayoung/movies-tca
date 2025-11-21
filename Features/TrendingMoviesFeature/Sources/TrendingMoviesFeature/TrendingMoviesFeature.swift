@@ -52,7 +52,7 @@ public struct TrendingMoviesFeature: Sendable {
 
 extension TrendingMoviesFeature {
 
-    fileprivate func handleFetchTrendingMovies() -> EffectOf<Self> {
+    private func handleFetchTrendingMovies() -> EffectOf<Self> {
         .run { send in
             do {
                 let movies = try await trendingMovies.fetch()
@@ -62,4 +62,5 @@ extension TrendingMoviesFeature {
             }
         }
     }
+
 }

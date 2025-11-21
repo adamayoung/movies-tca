@@ -14,6 +14,7 @@
 		668F58892ECCFEBE00B47B07 /* TrendingMoviesFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 668F58882ECCFEBE00B47B07 /* TrendingMoviesFeature */; };
 		668F588C2ECDB2D500B47B07 /* TrendingTVSeriesFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 668F588B2ECDB2D500B47B07 /* TrendingTVSeriesFeature */; };
 		668F58912ECDD5CA00B47B07 /* TVSeriesDetailsFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 668F58902ECDD5CA00B47B07 /* TVSeriesDetailsFeature */; };
+		900E28EA2ED0781900ED5DFC /* ExploreFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 900E28E92ED0781900ED5DFC /* ExploreFeature */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		668F581A2ECCB1ED00B47B07 /* Exceptions for "Features" folder in "MoviesTCA" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				ExploreFeature,
 				MovieDetailsFeature,
 				PersonDetailsFeature,
 				TrendingMoviesFeature,
@@ -74,7 +76,6 @@
 		668F58812ECCDBA300B47B07 /* Exceptions for "Adapters" folder in "MoviesTCA" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				ConfigurationAdapters,
 				MoviesAdapters,
 				PeopleAdapters,
 				TMDbAdapters,
@@ -141,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				668F58892ECCFEBE00B47B07 /* TrendingMoviesFeature in Frameworks */,
+				900E28EA2ED0781900ED5DFC /* ExploreFeature in Frameworks */,
 				666AEE492ECE0A1B0038814E /* PersonDetailsFeature in Frameworks */,
 				666AEE272ECDEEEC0038814E /* TrendingPeopleFeature in Frameworks */,
 				668F587E2ECCB82A00B47B07 /* MovieDetailsFeature in Frameworks */,
@@ -230,6 +232,7 @@
 				668F58902ECDD5CA00B47B07 /* TVSeriesDetailsFeature */,
 				666AEE262ECDEEEC0038814E /* TrendingPeopleFeature */,
 				666AEE482ECE0A1B0038814E /* PersonDetailsFeature */,
+				900E28E92ED0781900ED5DFC /* ExploreFeature */,
 			);
 			productName = MoviesTCA;
 			productReference = 664551862ECB7C2100250D87 /* MoviesTCA.app */;
@@ -529,7 +532,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.1;
@@ -573,7 +576,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.1;
@@ -777,6 +780,10 @@
 		668F58902ECDD5CA00B47B07 /* TVSeriesDetailsFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TVSeriesDetailsFeature;
+		};
+		900E28E92ED0781900ED5DFC /* ExploreFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ExploreFeature;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

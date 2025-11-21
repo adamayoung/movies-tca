@@ -13,14 +13,8 @@ package final class TrendingInfrastructureContainer {
 
     private init() {}
 
-    package static func makeTrendingRepository(
-        trendingService: some TrendingService,
-        appConfigurationProvider: some AppConfigurationProvider
-    ) -> some TrendingRepository {
-        let remoteDataSource = Self.makeTrendingRemoteDataSource(
-            trendingService: trendingService,
-            appConfigurationProvider: appConfigurationProvider
-        )
+    package static func makeTrendingRepository(trendingService: some TrendingService) -> some TrendingRepository {
+        let remoteDataSource = Self.makeTrendingRemoteDataSource(trendingService: trendingService)
 
         return DefaultTrendingRepository(remoteDataSource: remoteDataSource)
     }
@@ -30,13 +24,9 @@ package final class TrendingInfrastructureContainer {
 extension TrendingInfrastructureContainer {
 
     private static func makeTrendingRemoteDataSource(
-        trendingService: some TrendingService,
-        appConfigurationProvider: some AppConfigurationProvider
+        trendingService: some TrendingService
     ) -> some TrendingRemoteDataSource {
-        TMDbTrendingRemoteDataSource(
-            trendingService: trendingService,
-            appConfigurationProvider: appConfigurationProvider
-        )
+        TMDbTrendingRemoteDataSource(trendingService: trendingService)
     }
 
 }

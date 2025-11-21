@@ -7,37 +7,25 @@
 
 import Foundation
 import MoviesDomain
-import MoviesInfrastructure
-import TMDb
 
 public final class MoviesContainer {
 
-    private let movieService: any MovieService
+    private let movieRepository: any MovieRepository
     private let appConfigurationProvider: any AppConfigurationProviding
 
     init(
-        movieService: some MovieService,
+        movieRepository: some MovieRepository,
         appConfigurationProvider: some AppConfigurationProviding
     ) {
-        self.movieService = movieService
+        self.movieRepository = movieRepository
         self.appConfigurationProvider = appConfigurationProvider
     }
 
-    public func makeFetchMovieUseCase() -> some FetchMovieUseCase {
-        let repository = makeMovieRepository()
-
-        return DefaultFetchMovieUseCase(
-            repository: repository,
+    public func makeFetchMovieDetailsUseCase() -> some FetchMovieDetailsUseCase {
+        DefaultFetchMovieDetailsUseCase(
+            repository: movieRepository,
             appConfigurationProvider: appConfigurationProvider
         )
-    }
-
-}
-
-extension MoviesContainer {
-
-    private func makeMovieRepository() -> MovieRepository {
-        MoviesInfrastructureContainer.makeMovieRepository(movieService: movieService)
     }
 
 }
