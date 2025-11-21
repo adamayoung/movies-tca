@@ -15,6 +15,7 @@ import ExploreFeature
 struct ExploreRootView: View {
 
     @Bindable var store: StoreOf<ExploreRootFeature>
+    @Namespace private var namespace
 
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
@@ -22,14 +23,22 @@ struct ExploreRootView: View {
                 store: store.scope(
                     state: \.explore,
                     action: \.explore
-                )
+                ),
+                transitionNamespace: namespace
             )
         } destination: { store in
             switch store.case {
             case .movieDetails(let store):
-                MovieDetailsView(store: store)
+                MovieDetailsView(
+                    store: store,
+                    transitionNamespace: namespace
+                )
+//                .navigationTransition(.zoom(sourceID: store.id, in: namespace))
             case .tvSeriesDetails(let store):
-                TVSeriesDetailsView(store: store)
+                TVSeriesDetailsView(
+                    store: store,
+                    transitionNamespace: namespace
+                )
             case .personDetails(let store):
                 PersonDetailsView(store: store)
             }

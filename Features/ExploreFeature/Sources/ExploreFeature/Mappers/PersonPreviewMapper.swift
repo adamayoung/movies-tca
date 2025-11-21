@@ -14,7 +14,7 @@ struct PersonPreviewMapper {
         PersonPreview(
             id: personPreviewDetails.id,
             name: personPreviewDetails.name,
-            profileURL: personPreviewDetails.profileURLSet?.thumbnail
+            profileURL: personPreviewDetails.profileURLSet?.detail
         )
     }
     

@@ -32,7 +32,9 @@ extension TrendingMoviesClient: DependencyKey {
     static var previewValue: TrendingMoviesClient {
         TrendingMoviesClient(
             fetch: {
-                [
+                try await Task.sleep(for: .seconds(2))
+
+                return [
                     MoviePreview(
                         id: 1,
                         title: "The Running Man",

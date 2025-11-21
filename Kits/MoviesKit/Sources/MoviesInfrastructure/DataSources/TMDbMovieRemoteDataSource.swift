@@ -32,6 +32,25 @@ final class TMDbMovieRemoteDataSource: MovieRemoteDataSource {
         return movie
     }
 
+    func images(
+        forMovie movieID: Int
+    ) async throws(MovieRepositoryError) -> MoviesDomain.ImageCollection {
+        let tmdbImageCollection: TMDb.ImageCollection
+        do {
+            tmdbImageCollection = try await movieService.images(
+                forMovie: movieID,
+                filter: .init(languages: ["en"])
+            )
+        } catch let error {
+            throw MovieRepositoryError(error)
+        }
+
+        let mapper = ImageCollectionMapper()
+        let imageCollection = mapper.map(tmdbImageCollection)
+
+        return imageCollection
+    }
+
 }
 
 extension MovieRepositoryError {

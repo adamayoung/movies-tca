@@ -22,4 +22,11 @@ final class DefaultMovieRepository: MovieRepository {
         return movie
     }
 
+    func images(
+        forMovie movieID: Int
+    ) async throws(MovieRepositoryError) -> MoviesDomain.ImageCollection {
+        let imageCollection = try await remoteDataSource.images(forMovie: movieID)
+        return imageCollection
+    }
+
 }

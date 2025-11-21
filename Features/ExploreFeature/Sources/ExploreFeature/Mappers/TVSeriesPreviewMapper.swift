@@ -14,7 +14,8 @@ struct TVSeriesPreviewMapper {
         TVSeriesPreview(
             id: tvSeriesPreviewDetails.id,
             name: tvSeriesPreviewDetails.name,
-            posterURL: tvSeriesPreviewDetails.posterURLSet?.thumbnail
+            posterURL: tvSeriesPreviewDetails.posterURLSet?.detail,
+            backdropURL: tvSeriesPreviewDetails.backdropURLSet?.detail
         )
     }
     

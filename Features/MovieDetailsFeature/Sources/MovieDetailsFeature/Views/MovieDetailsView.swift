@@ -12,26 +12,31 @@ import SwiftUI
 public struct MovieDetailsView: View {
 
     @Bindable private var store: StoreOf<MovieDetailsFeature>
+    private let namespace: Namespace.ID
 
     private var movie: Movie? {
         store.movie
     }
 
-    public init(store: StoreOf<MovieDetailsFeature>) {
+    public init(
+        store: StoreOf<MovieDetailsFeature>,
+        transitionNamespace: Namespace.ID
+    ) {
         self._store = .init(store)
+        self.namespace = transitionNamespace
     }
 
     public var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading) {
+        StretchyHeaderScrollView(
+            header: {
                 header
                     .flexibleHeaderContent(height: 600)
-
+            },
+            content: {
                 content
                     .padding(.horizontal)
             }
-        }
-        .flexibleHeaderScrollView()
+        )
         .task {
             store.send(.loadMovie)
         }
@@ -39,8 +44,6 @@ public struct MovieDetailsView: View {
         #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
         #endif
-        .toolbar(removing: .title)
-        .ignoresSafeArea(edges: .top)
     }
 
     @ViewBuilder private var header: some View {
@@ -61,12 +64,17 @@ public struct MovieDetailsView: View {
 }
 
 #Preview {
-    MovieDetailsView(
-        store: Store(
-            initialState: MovieDetailsFeature.State(id: 1),
-            reducer: {
-                MovieDetailsFeature()
-            }
+    @Previewable @Namespace var namespace
+
+    NavigationStack {
+        MovieDetailsView(
+            store: Store(
+                initialState: MovieDetailsFeature.State(id: 1),
+                reducer: {
+                    MovieDetailsFeature()
+                }
+            ),
+            transitionNamespace: namespace
         )
-    )
+    }
 }

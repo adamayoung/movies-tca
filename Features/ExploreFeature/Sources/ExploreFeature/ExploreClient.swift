@@ -46,7 +46,8 @@ extension ExploreClient: DependencyKey {
     static var previewValue: ExploreClient {
         ExploreClient(
             fetchTrendingMovies: {
-                [
+                try await Task.sleep(for: .seconds(2))
+                return [
                     MoviePreview(
                         id: 1,
                         title: "The Running Man",
@@ -64,7 +65,8 @@ extension ExploreClient: DependencyKey {
                 ]
             },
             fetchTrendingTVSeries: {
-                [
+                try await Task.sleep(for: .seconds(1))
+                return [
                     TVSeriesPreview(
                         id: 225171,
                         name: "Pluribus",
@@ -82,7 +84,8 @@ extension ExploreClient: DependencyKey {
                 ]
             },
             fetchTrendingPeople: {
-                [
+                try await Task.sleep(for: .seconds(2))
+                return [
                     PersonPreview(
                         id: 234352,
                         name: "Margot Robbie",

@@ -13,6 +13,7 @@ import TrendingTVSeriesFeature
 struct TVSeriesRootView: View {
 
     @Bindable var store: StoreOf<TVSeriesRootFeature>
+    @Namespace private var namespace
 
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
@@ -25,7 +26,10 @@ struct TVSeriesRootView: View {
         } destination: { store in
             switch store.case {
             case .details(let store):
-                TVSeriesDetailsView(store: store)
+                TVSeriesDetailsView(
+                    store: store,
+                    transitionNamespace: namespace
+                )
             }
         }
     }

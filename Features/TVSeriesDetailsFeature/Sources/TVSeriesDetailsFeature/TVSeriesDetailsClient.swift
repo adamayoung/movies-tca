@@ -36,7 +36,8 @@ extension TVSeriesDetailsClient: DependencyKey {
                     id: 66732,
                     name: "Stranger Things",
                     overview: "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces, and one strange little girl.",
-                    posterURL: URL(string: "https://image.tmdb.org/t/p/w780/cVxVGwHce6xnW8UaVUggaPXbmoE.jpg")
+                    posterURL: URL(string: "https://image.tmdb.org/t/p/w780/cVxVGwHce6xnW8UaVUggaPXbmoE.jpg"),
+                    backdropURL: URL(string: "https://image.tmdb.org/t/p/w1280/56v2KjBlU4XaOv9rVYEQypROD7P.jpg")
                 )
             }
         )

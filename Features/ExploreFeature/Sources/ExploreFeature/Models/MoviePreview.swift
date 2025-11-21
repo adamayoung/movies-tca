@@ -12,15 +12,18 @@ public struct MoviePreview: Identifiable, Sendable, Equatable {
     public let id: Int
     public let title: String
     public let posterURL: URL?
+    public let backdropURL: URL?
 
     public init(
         id: Int,
         title: String,
-        posterURL: URL? = nil
+        posterURL: URL? = nil,
+        backdropURL: URL? = nil
     ) {
         self.id = id
         self.title = title
         self.posterURL = posterURL
+        self.backdropURL = backdropURL
     }
 
 }

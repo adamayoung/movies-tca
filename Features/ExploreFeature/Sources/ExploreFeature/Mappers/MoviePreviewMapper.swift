@@ -14,7 +14,8 @@ struct MoviePreviewMapper {
         MoviePreview(
             id: moviePreviewDetails.id,
             title: moviePreviewDetails.title,
-            posterURL: moviePreviewDetails.posterURLSet?.thumbnail
+            posterURL: moviePreviewDetails.posterURLSet?.detail,
+            backdropURL: moviePreviewDetails.backdropURLSet?.detail
         )
     }
     

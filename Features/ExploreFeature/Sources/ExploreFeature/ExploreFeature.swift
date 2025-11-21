@@ -18,7 +18,10 @@ public struct ExploreFeature: Sendable {
         public struct TrendingMoviesState {
             var movies: [MoviePreview]
             var isLoading: Bool
-            
+            var isInitiallyLoading: Bool {
+                movies.isEmpty && isLoading
+            }
+
             public init(
                 movies: [MoviePreview] = [],
                 isLoading: Bool = false
@@ -31,7 +34,10 @@ public struct ExploreFeature: Sendable {
         public struct TrendingTVSeriesState {
             var tvSeries: [TVSeriesPreview]
             var isLoading: Bool
-            
+            var isInitiallyLoading: Bool {
+                tvSeries.isEmpty && isLoading
+            }
+
             public init(
                 tvSeries: [TVSeriesPreview] = [],
                 isLoading: Bool = false
@@ -44,7 +50,10 @@ public struct ExploreFeature: Sendable {
         public struct TrendingPeopleState {
             var people: [PersonPreview]
             var isLoading: Bool
-            
+            var isInitiallyLoading: Bool {
+                people.isEmpty && isLoading
+            }
+
             public init(
                 people: [PersonPreview] = [],
                 isLoading: Bool = false
@@ -57,7 +66,10 @@ public struct ExploreFeature: Sendable {
         var trendingMovies: TrendingMoviesState
         var trendingTVSeries: TrendingTVSeriesState
         var trendingPeople: TrendingPeopleState
-        
+        var isInitiallyLoading: Bool {
+            trendingMovies.isInitiallyLoading && trendingTVSeries.isInitiallyLoading && trendingPeople.isInitiallyLoading
+        }
+
         public init(
             trendingMovies: TrendingMoviesState = .init(),
             trendingTVSeries: TrendingTVSeriesState = .init(),

@@ -12,15 +12,18 @@ public struct TVSeriesPreview: Identifiable, Equatable, Sendable {
     public let id: Int
     public let name: String
     public let posterURL: URL?
+    public let backdropURL: URL?
 
     public init(
         id: Int,
         name: String,
-        posterURL: URL? = nil
+        posterURL: URL? = nil,
+        backdropURL: URL? = nil
     ) {
         self.id = id
         self.name = name
         self.posterURL = posterURL
+        self.backdropURL = backdropURL
     }
 
 }

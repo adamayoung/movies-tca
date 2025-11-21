@@ -16,9 +16,17 @@ public struct TrendingMoviesFeature: Sendable {
     @ObservableState
     public struct State {
         var movies: [MoviePreview]
+        var isLoading: Bool
+        var isInitiallyLoading: Bool {
+            movies.isEmpty && isLoading
+        }
 
-        public init(movies: [MoviePreview] = []) {
+        public init(
+            movies: [MoviePreview] = [],
+            isLoading: Bool = false
+        ) {
             self.movies = movies
+            self.isLoading = isLoading
         }
     }
 
@@ -38,9 +46,11 @@ public struct TrendingMoviesFeature: Sendable {
         Reduce { state, action in
             switch action {
             case .loadTrendingMovies:
+                state.isLoading = true
                 return handleFetchTrendingMovies()
             case .trendingMoviesLoaded(let movies):
                 state.movies = movies
+                state.isLoading = false
                 return .none
             case .navigate:
                 return .none
