@@ -15,7 +15,7 @@ public struct ExploreFeature: Sendable {
     
     @ObservableState
     public struct State {
-        public struct TrendingMoviesState {
+        public struct MoviesCollectionState {
             var movies: [MoviePreview]
             var isLoading: Bool
             var isInitiallyLoading: Bool {
@@ -31,7 +31,7 @@ public struct ExploreFeature: Sendable {
             }
         }
         
-        public struct TrendingTVSeriesState {
+        public struct TVSeriesCollectionState {
             var tvSeries: [TVSeriesPreview]
             var isLoading: Bool
             var isInitiallyLoading: Bool {
@@ -47,7 +47,7 @@ public struct ExploreFeature: Sendable {
             }
         }
         
-        public struct TrendingPeopleState {
+        public struct PeopleCollectionState {
             var people: [PersonPreview]
             var isLoading: Bool
             var isInitiallyLoading: Bool {
@@ -63,19 +63,25 @@ public struct ExploreFeature: Sendable {
             }
         }
         
-        var trendingMovies: TrendingMoviesState
-        var trendingTVSeries: TrendingTVSeriesState
-        var trendingPeople: TrendingPeopleState
+        var trendingMovies: MoviesCollectionState
+        var popularMovies: MoviesCollectionState
+        var trendingTVSeries: TVSeriesCollectionState
+        var trendingPeople: PeopleCollectionState
         var isInitiallyLoading: Bool {
-            trendingMovies.isInitiallyLoading && trendingTVSeries.isInitiallyLoading && trendingPeople.isInitiallyLoading
+            trendingMovies.isInitiallyLoading
+            && popularMovies.isInitiallyLoading
+            && trendingTVSeries.isInitiallyLoading
+            && trendingPeople.isInitiallyLoading
         }
 
         public init(
-            trendingMovies: TrendingMoviesState = .init(),
-            trendingTVSeries: TrendingTVSeriesState = .init(),
-            trendingPeople: TrendingPeopleState = .init()
+            trendingMovies: MoviesCollectionState = .init(),
+            popularMovies: MoviesCollectionState = .init(),
+            trendingTVSeries: TVSeriesCollectionState = .init(),
+            trendingPeople: PeopleCollectionState = .init()
         ) {
             self.trendingMovies = trendingMovies
+            self.popularMovies = popularMovies
             self.trendingTVSeries = trendingTVSeries
             self.trendingPeople = trendingPeople
         }
@@ -84,17 +90,18 @@ public struct ExploreFeature: Sendable {
     public enum Action {
         case load
         case trendingMoviesLoaded([MoviePreview])
+        case popularMoviesLoaded([MoviePreview])
         case trendingTVSeriesLoaded([TVSeriesPreview])
         case trendingPeopleLoaded([PersonPreview])
         case navigate(Navigation)
     }
     
     public enum Navigation: Equatable, Hashable {
-        case movieDetails(id: Int)
-        case tvSeriesDetails(id: Int)
-        case personDetails(id: Int)
+        case movieDetails(id: Int, transitionID: String? = nil)
+        case tvSeriesDetails(id: Int, transitionID: String? = nil)
+        case personDetails(id: Int, transitionID: String? = nil)
     }
-    
+ 
     public init() {}
     
     public var body: some Reducer<State, Action> {
@@ -102,12 +109,17 @@ public struct ExploreFeature: Sendable {
             switch action {
             case .load:
                 state.trendingMovies.isLoading = true
+                state.popularMovies.isLoading = true
                 state.trendingTVSeries.isLoading = true
                 state.trendingPeople.isLoading = true
                 return handleFetchAll()
             case .trendingMoviesLoaded(let movies):
                 state.trendingMovies.movies = movies
                 state.trendingMovies.isLoading = false
+                return .none
+            case .popularMoviesLoaded(let movies):
+                state.popularMovies.movies = movies
+                state.popularMovies.isLoading = false
                 return .none
             case .trendingTVSeriesLoaded(let tvSeries):
                 state.trendingTVSeries.tvSeries = tvSeries
@@ -129,31 +141,55 @@ extension ExploreFeature {
     
     private func handleFetchAll() -> EffectOf<Self> {
         .merge(
-            .run { send in
-                do {
-                    let movies = try await explore.fetchTrendingMovies()
-                    await send(.trendingMoviesLoaded(movies))
-                } catch {
-                    print("Error: \(error.localizedDescription)")
-                }
-            },
-            .run { send in
-                do {
-                    let tvSeries = try await explore.fetchTrendingTVSeries()
-                    await send(.trendingTVSeriesLoaded(tvSeries))
-                } catch {
-                    print("Error: \(error.localizedDescription)")
-                }
-            },
-            .run { send in
-                do {
-                    let people = try await explore.fetchTrendingPeople()
-                    await send(.trendingPeopleLoaded(people))
-                } catch {
-                    print("Error: \(error.localizedDescription)")
-                }
-            }
+            handleFetchTrendingMovies(),
+            handleFetchPopularMovies(),
+            handleFetchTrendingTVSeries(),
+            handleFetchTrendingPeople()
         )
+    }
+    
+    private func handleFetchTrendingMovies() -> EffectOf<Self> {
+        .run { send in
+            do {
+                let movies = try await explore.fetchTrendingMovies()
+                await send(.trendingMoviesLoaded(movies))
+            } catch {
+                print("Error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func handleFetchPopularMovies() -> EffectOf<Self> {
+        .run { send in
+            do {
+                let movies = try await explore.fetchPopularMovies()
+                await send(.popularMoviesLoaded(movies))
+            } catch {
+                print("Error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func handleFetchTrendingTVSeries() -> EffectOf<Self> {
+        .run { send in
+            do {
+                let tvSeries = try await explore.fetchTrendingTVSeries()
+                await send(.trendingTVSeriesLoaded(tvSeries))
+            } catch {
+                print("Error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func handleFetchTrendingPeople() -> EffectOf<Self> {
+        .run { send in
+            do {
+                let people = try await explore.fetchTrendingPeople()
+                await send(.trendingPeopleLoaded(people))
+            } catch {
+                print("Error: \(error.localizedDescription)")
+            }
+        }
     }
     
 }

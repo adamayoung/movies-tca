@@ -16,7 +16,8 @@ struct TVSeriesMapper {
             name: tvSeriesDetails.name,
             overview: tvSeriesDetails.overview ?? "",
             posterURL: tvSeriesDetails.posterURLSet?.detail,
-            backdropURL: tvSeriesDetails.backdropURLSet?.full
+            backdropURL: tvSeriesDetails.backdropURLSet?.full,
+            logoURL: tvSeriesDetails.logoURLSet?.detail
         )
     }
     

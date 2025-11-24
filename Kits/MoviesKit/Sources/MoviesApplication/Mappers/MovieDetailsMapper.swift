@@ -11,16 +11,18 @@ import MoviesDomain
 
 struct MovieDetailsMapper {
 
-    func map(_ movie: Movie, imagesConfiguration: ImagesConfiguration) -> MovieDetails {
+    func map(_ movie: Movie, imageCollection: ImageCollection, imagesConfiguration: ImagesConfiguration) -> MovieDetails {
         let posterURLSet = imagesConfiguration.posterURLSet(for: movie.posterPath)
         let backdropURLSet = imagesConfiguration.posterURLSet(for: movie.backdropPath)
+        let logoURLSet = imagesConfiguration.logoURLSet(for: imageCollection.logoPaths.first)
 
         return MovieDetails(
             id: movie.id,
             title: movie.title,
             overview: movie.overview,
             posterURLSet: posterURLSet,
-            backdropURLSet: backdropURLSet
+            backdropURLSet: backdropURLSet,
+            logoURLSet: logoURLSet
 
         )
     }

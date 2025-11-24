@@ -13,7 +13,9 @@ package final class TrendingInfrastructureContainer {
 
     private init() {}
 
-    package static func makeTrendingRepository(trendingService: some TrendingService) -> some TrendingRepository {
+    package static func makeTrendingRepository(
+        trendingService: some TrendingService
+    ) -> some TrendingRepository {
         let remoteDataSource = Self.makeTrendingRemoteDataSource(trendingService: trendingService)
 
         return DefaultTrendingRepository(remoteDataSource: remoteDataSource)

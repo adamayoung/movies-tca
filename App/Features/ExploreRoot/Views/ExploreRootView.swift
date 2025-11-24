@@ -29,21 +29,63 @@ struct ExploreRootView: View {
         } destination: { store in
             switch store.case {
             case .movieDetails(let store):
-                MovieDetailsView(
-                    store: store,
-                    transitionNamespace: namespace
-                )
-//                .navigationTransition(.zoom(sourceID: store.id, in: namespace))
+               movieDetails(store: store)
             case .tvSeriesDetails(let store):
-                TVSeriesDetailsView(
-                    store: store,
-                    transitionNamespace: namespace
-                )
+                tvSeriesDetails(store: store)
             case .personDetails(let store):
-                PersonDetailsView(store: store)
+                personDetails(store: store)
             }
         }
     }
+    
+    @ViewBuilder
+    private func movieDetails(store: StoreOf<MovieDetailsFeature>) -> some View {
+        if let transitionID = store.transitionID {
+            MovieDetailsView(
+                store: store,
+                transitionNamespace: namespace
+            )
+            .navigationTransition(.zoom(sourceID: transitionID, in: namespace))
+        } else {
+            MovieDetailsView(
+                store: store,
+                transitionNamespace: namespace
+            )
+        }
+    }
+    
+    @ViewBuilder
+    private func tvSeriesDetails(store: StoreOf<TVSeriesDetailsFeature>) -> some View {
+        if let transitionID = store.transitionID {
+            TVSeriesDetailsView(
+                store: store,
+                transitionNamespace: namespace
+            )
+            .navigationTransition(.zoom(sourceID: transitionID, in: namespace))
+        } else {
+            TVSeriesDetailsView(
+                store: store,
+                transitionNamespace: namespace
+            )
+        }
+    }
+    
+    @ViewBuilder
+    private func personDetails(store: StoreOf<PersonDetailsFeature>) -> some View {
+        if let transitionID = store.transitionID {
+            PersonDetailsView(
+                store: store,
+                transitionNamespace: namespace
+            )
+            .navigationTransition(.zoom(sourceID: transitionID, in: namespace))
+        } else {
+            PersonDetailsView(
+                store: store,
+                transitionNamespace: namespace
+            )
+        }
+    }
+    
 }
 
 #Preview {

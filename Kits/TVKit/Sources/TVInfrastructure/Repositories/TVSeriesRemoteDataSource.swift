@@ -11,5 +11,7 @@ import TVDomain
 protocol TVSeriesRemoteDataSource: Sendable {
 
     func tvSeries(withID id: Int) async throws(TVSeriesRepositoryError) -> TVSeries
+    
+    func images(forTVSeries tvSeriesID: Int) async throws(TVSeriesRepositoryError) -> ImageCollection
 
 }

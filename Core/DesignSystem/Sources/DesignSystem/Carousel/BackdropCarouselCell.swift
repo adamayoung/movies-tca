@@ -11,8 +11,8 @@ public struct BackdropCarouselCell<CellLabel: View>: View {
 
     private var imageURL: URL?
     private var cellLabel: CellLabel
-    private var transitionID: UUID?
-    private var transitionNamespace: Namespace.ID?
+    private var transitionID: String?
+    private var namespace: Namespace.ID?
 
     #if os(macOS) || os(visionOS)
         private let width: CGFloat = 300
@@ -22,21 +22,21 @@ public struct BackdropCarouselCell<CellLabel: View>: View {
 
     public init(
         imageURL: URL?,
-        transitionID: UUID? = nil,
+        transitionID: String? = nil,
         transitionNamespace: Namespace.ID? = nil,
         @ViewBuilder cellLabel: () -> CellLabel
     ) {
         self.imageURL = imageURL
         self.transitionID = transitionID
-        self.transitionNamespace = transitionNamespace
+        self.namespace = transitionNamespace
         self.cellLabel = cellLabel()
     }
 
     public var body: some View {
         VStack {
-            if let transitionID, let transitionNamespace {
+            if let transitionID, let namespace {
                 backdropImage
-                    .matchedTransitionSource(id: transitionID, in: transitionNamespace)
+                    .matchedTransitionSource(id: transitionID.description, in: namespace)
             } else {
                 backdropImage
             }
@@ -63,20 +63,27 @@ public struct BackdropCarouselCell<CellLabel: View>: View {
 }
 
 #Preview {
-    BackdropCarouselCell(
-        imageURL: URL(string: "https://image.tmdb.org/t/p/w1280/xRyINp9KfMLVjRiO5nCsoRDdvvF.jpg")
-    ) {
-        HStack(alignment: .top, spacing: 15) {
-            Text(verbatim: "1")
-                .font(.title)
-                .bold()
-                .foregroundStyle(Color.secondary)
-
-            Text(verbatim: "Fight Club")
-                .multilineTextAlignment(.leading)
-                .fixedSize(horizontal: false, vertical: true)
-
-            Spacer()
+    ScrollView(.horizontal, showsIndicators: false) {
+        LazyHStack(alignment: .top, spacing: 20) {
+            BackdropCarouselCell(
+                imageURL: URL(string: "https://image.tmdb.org/t/p/w1280/xRyINp9KfMLVjRiO5nCsoRDdvvF.jpg")
+            ) {
+                HStack(alignment: .top, spacing: 15) {
+                    Text(verbatim: "1")
+                        .font(.title)
+                        .bold()
+                        .foregroundStyle(Color.secondary)
+                    
+                    Text(verbatim: "Fight Club")
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                    
+                    Spacer()
+                }
+            }
+            .fixedSize(horizontal: true, vertical: false)
         }
+        .scrollTargetLayout()
     }
+    .scrollTargetBehavior(.viewAligned)
 }

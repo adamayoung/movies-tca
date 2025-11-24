@@ -11,8 +11,15 @@
         }
       }
     },
-    "People: %lld" : {
-
+    "POPULAR_MOVIES" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Popular Movies"
+          }
+        }
+      }
     },
     "TRENDING_MOVIES" : {
       "localizations" : {
@@ -20,6 +27,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trending Movies"
+          }
+        }
+      }
+    },
+    "TRENDING_PEOPLE" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trending People"
           }
         }
       }

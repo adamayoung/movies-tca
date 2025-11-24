@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct MoviePreview: Identifiable, Sendable, Equatable {
+public struct MoviePreview: Identifiable, Sendable, Equatable, Hashable {
 
     public let id: Int
     public let title: String

@@ -27,5 +27,19 @@ public final class MoviesContainer {
             appConfigurationProvider: appConfigurationProvider
         )
     }
+    
+    public func makeFetchMovieImageCollectionUseCase() -> some FetchMovieImageCollectionUseCase {
+        DefaultFetchMovieImageCollectionUseCase(
+            repository: movieRepository,
+            appConfigurationProvider: appConfigurationProvider
+        )
+    }
+    
+    public func makeFetchPopularMoviesUseCase() -> some FetchPopularMoviesUseCase {
+        DefaultFetchPopularMoviesUseCase(
+            repository: movieRepository,
+            appConfigurationProvider: appConfigurationProvider
+        )
+    }
 
 }

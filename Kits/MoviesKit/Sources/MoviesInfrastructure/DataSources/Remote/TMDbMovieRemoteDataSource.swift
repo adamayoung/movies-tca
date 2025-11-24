@@ -5,7 +5,6 @@
 //  Created by Adam Young on 18/11/2025.
 //
 
-import CoreDomain
 import Foundation
 import MoviesDomain
 import TMDb
@@ -49,6 +48,19 @@ final class TMDbMovieRemoteDataSource: MovieRemoteDataSource {
         let imageCollection = mapper.map(tmdbImageCollection)
 
         return imageCollection
+    }
+    
+    func popular(page: Int) async throws(MovieRepositoryError) -> [MoviePreview] {
+        let tmdbMovies: [TMDb.MovieListItem]
+        do {
+            tmdbMovies = try await movieService.popular(page: page, country: "GB", language: "en").results
+        } catch let error {
+            throw MovieRepositoryError(error)
+        }
+        
+        let mapper = MoviePreviewMapper()
+        let movies = tmdbMovies.map(mapper.map)
+        return movies
     }
 
 }

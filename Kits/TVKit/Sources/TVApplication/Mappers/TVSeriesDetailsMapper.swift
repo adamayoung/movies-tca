@@ -11,16 +11,18 @@ import TVDomain
 
 struct TVSeriesDetailsMapper {
 
-    func map(_ tvSeries: TVSeries, imagesConfiguration: ImagesConfiguration) -> TVSeriesDetails {
+    func map(_ tvSeries: TVSeries, imageCollection: ImageCollection, imagesConfiguration: ImagesConfiguration) -> TVSeriesDetails {
         let posterURLSet = imagesConfiguration.posterURLSet(for: tvSeries.posterPath)
         let backdropURLSet = imagesConfiguration.posterURLSet(for: tvSeries.backdropPath)
+        let logoURLSet = imagesConfiguration.logoURLSet(for: imageCollection.logoPaths.first)
 
         return TVSeriesDetails(
             id: tvSeries.id,
             name: tvSeries.name,
             overview: tvSeries.overview,
             posterURLSet: posterURLSet,
-            backdropURLSet: backdropURLSet
+            backdropURLSet: backdropURLSet,
+            logoURLSet: logoURLSet
         )
     }
 

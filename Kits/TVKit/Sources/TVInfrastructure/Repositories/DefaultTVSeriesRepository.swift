@@ -21,5 +21,10 @@ final class DefaultTVSeriesRepository: TVSeriesRepository {
         let tvSeries = try await remoteDataSource.tvSeries(withID: id)
         return tvSeries
     }
+    
+    func images(forTVSeries tvSeriesID: Int) async throws(TVSeriesRepositoryError) -> TVDomain.ImageCollection {
+        let imageCollection = try await remoteDataSource.images(forTVSeries: tvSeriesID)
+        return imageCollection
+    }
 
 }

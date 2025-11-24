@@ -16,13 +16,19 @@ public struct TrendingComposition {
 
     public static func makeTrendingContainer(
         trendingService: some TrendingService,
-        appConfigurationProvider: some AppConfigurationProviding
+        appConfigurationProvider: some AppConfigurationProviding,
+        movieLogoImageProvider: some MovieLogoImageProviding,
+        tvSeriesLogoImageProvider: some TVSeriesLogoImageProviding
     ) -> TrendingContainer {
-        let trendingRepository = TrendingInfrastructureContainer.makeTrendingRepository(trendingService: trendingService)
+        let trendingRepository = TrendingInfrastructureContainer.makeTrendingRepository(
+            trendingService: trendingService
+        )
         
         return TrendingContainer(
             trendingRepository: trendingRepository,
-            appConfigurationProvider: appConfigurationProvider
+            appConfigurationProvider: appConfigurationProvider,
+            movieLogoImageProvider: movieLogoImageProvider,
+            tvSeriesLogoImageProvider: tvSeriesLogoImageProvider
         )
     }
 

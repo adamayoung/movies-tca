@@ -11,14 +11,14 @@ public struct Movie: Identifiable, Equatable, Sendable {
 
     public let id: Int
     public let title: String
-    public let overview: String?
+    public let overview: String
     public let posterPath: URL?
     public let backdropPath: URL?
 
     public init(
         id: Int,
         title: String,
-        overview: String? = nil,
+        overview: String,
         posterPath: URL? = nil,
         backdropPath: URL? = nil
     ) {

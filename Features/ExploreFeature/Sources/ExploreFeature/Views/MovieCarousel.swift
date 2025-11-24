@@ -10,27 +10,29 @@ import SwiftUI
 
 struct MovieCarousel: View {
 
-    enum MovieCarouselType: String {
+    enum CarouselType: String {
         case backdrop
         case poster
     }
 
     var movies: [MoviePreview]
-    var type: MovieCarouselType
+    var type: CarouselType
     var transitionNamespace: Namespace.ID
-    var didSelectMovie: (MoviePreview) -> Void
+    var didSelectMovie: (MoviePreview, String) -> Void
 
     var body: some View {
         Carousel {
             ForEach(Array(movies.enumerated()), id: \.offset) { offset, movie in
+                let transitionID = TransitionID(movie: movie, carouselType: type).value
+                
                 switch type {
                 case .backdrop:
                     Button {
-                        didSelectMovie(movie)
+                        didSelectMovie(movie, transitionID)
                     } label: {
                         BackdropCarouselCell(
                             imageURL: movie.backdropURL,
-                            transitionID: UUID(),
+                            transitionID: transitionID,
                             transitionNamespace: transitionNamespace
                         ) {
                             cellLabel(title: movie.title, index: offset)
@@ -41,11 +43,11 @@ struct MovieCarousel: View {
 
                 case .poster:
                     Button {
-                        didSelectMovie(movie)
+                        didSelectMovie(movie, transitionID)
                     } label: {
                         PosterCarouselCell(
                             imageURL: movie.posterURL,
-                            transitionID: UUID(),
+                            transitionID: transitionID,
                             transitionNamespace: transitionNamespace
                         ) {
                             cellLabel(title: movie.title, index: offset)
@@ -68,7 +70,7 @@ struct MovieCarousel: View {
                 .foregroundStyle(Color.secondary)
 
             Text(verbatim: title)
-                .lineLimit(2)
+                .lineLimit(2, reservesSpace: true)
                 .multilineTextAlignment(.leading)
 
             Spacer()
@@ -77,23 +79,29 @@ struct MovieCarousel: View {
     }
 
 }
-//
-//#Preview {
-//    @Previewable @Namespace var transitionNamespace
-//
-//    NavigationStack {
-//        ScrollView {
-//            MovieCarousel(
-//                movies: MovieListItemViewModel.previews,
-//                type: .backdrop,
-//                transitionNamespace: transitionNamespace
-//            )
-//
-//            MovieCarousel(
-//                movies: MovieListItemViewModel.previews,
-//                type: .poster,
-//                transitionNamespace: transitionNamespace
-//            )
-//        }
-//    }
-//}
+
+#Preview("Backdrops") {
+    @Previewable @Namespace var transitionNamespace
+
+    ScrollView {
+        MovieCarousel(
+            movies: MoviePreview.mocks,
+            type: .backdrop,
+            transitionNamespace: transitionNamespace,
+            didSelectMovie: { _, _ in }
+        )
+    }
+}
+
+#Preview("Posters") {
+    @Previewable @Namespace var transitionNamespace
+
+    ScrollView {
+        MovieCarousel(
+            movies: MoviePreview.mocks,
+            type: .poster,
+            transitionNamespace: transitionNamespace,
+            didSelectMovie: { _, _ in }
+        )
+    }
+}

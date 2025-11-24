@@ -11,7 +11,7 @@ public struct PosterCarouselCell<CellLabel: View>: View {
 
     private var imageURL: URL?
     private var cellLabel: CellLabel
-    private var transitionID: UUID?
+    private var transitionID: String?
     private var transitionNamespace: Namespace.ID?
 
     #if os(macOS) || os(visionOS)
@@ -22,7 +22,7 @@ public struct PosterCarouselCell<CellLabel: View>: View {
 
     public init(
         imageURL: URL?,
-        transitionID: UUID? = nil,
+        transitionID: String? = nil,
         transitionNamespace: Namespace.ID? = nil,
         @ViewBuilder cellLabel: () -> CellLabel
     ) {

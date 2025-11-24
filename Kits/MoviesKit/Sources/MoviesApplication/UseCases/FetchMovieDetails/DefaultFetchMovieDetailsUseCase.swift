@@ -24,10 +24,12 @@ final class DefaultFetchMovieDetailsUseCase: FetchMovieDetailsUseCase {
 
     func execute(id: Movie.ID) async throws(FetchMovieDetailsError) -> MovieDetails {
         let movie: Movie
+        let imageCollection: ImageCollection
         let appConfiguration: AppConfiguration
         do {
-            (movie, appConfiguration) = try await (
+            (movie, imageCollection, appConfiguration) = try await (
                 repository.movie(withID: id),
+                repository.images(forMovie: id),
                 appConfigurationProvider.appConfiguration()
             )
         } catch let error {
@@ -35,7 +37,11 @@ final class DefaultFetchMovieDetailsUseCase: FetchMovieDetailsUseCase {
         }
 
         let mapper = MovieDetailsMapper()
-        let movieDetails = mapper.map(movie, imagesConfiguration: appConfiguration.images)
+        let movieDetails = mapper.map(
+            movie,
+            imageCollection: imageCollection,
+            imagesConfiguration: appConfiguration.images
+        )
 
         return movieDetails
     }

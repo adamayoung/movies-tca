@@ -12,6 +12,8 @@ public protocol MovieRepository: Sendable {
     func movie(withID id: Int) async throws(MovieRepositoryError) -> Movie
 
     func images(forMovie movieID: Int) async throws(MovieRepositoryError) -> ImageCollection
+    
+    func popular(page: Int) async throws(MovieRepositoryError) -> [MoviePreview]
 
 }
 

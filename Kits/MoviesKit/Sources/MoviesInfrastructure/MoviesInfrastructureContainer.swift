@@ -10,6 +10,8 @@ import MoviesDomain
 import TMDb
 
 package final class MoviesInfrastructureContainer {
+    
+    private static let movieLocalDataSource: some MovieLocalDataSource = InMemoryMovieLocalDataSource()
 
     private init() {}
 
@@ -27,6 +29,10 @@ extension MoviesInfrastructureContainer {
         movieService: some MovieService
     ) -> some MovieRemoteDataSource {
         TMDbMovieRemoteDataSource(movieService: movieService)
+    }
+
+    private static func makeMovieLocalDataSource() -> some MovieLocalDataSource {
+        movieLocalDataSource
     }
 
 }

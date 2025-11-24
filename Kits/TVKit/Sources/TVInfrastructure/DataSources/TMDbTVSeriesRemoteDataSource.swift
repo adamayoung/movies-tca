@@ -31,6 +31,23 @@ final class TMDbTVSeriesRemoteDataSource: TVSeriesRemoteDataSource {
 
         return tvSeries
     }
+    
+    func images(forTVSeries tvSeriesID: Int) async throws(TVSeriesRepositoryError) -> TVDomain.ImageCollection {
+        let tmdbImageCollection: TMDb.ImageCollection
+        do {
+            tmdbImageCollection = try await tvSeriesService.images(
+                forTVSeries: tvSeriesID,
+                filter: .init(languages: ["en"])
+            )
+        } catch let error {
+            throw TVSeriesRepositoryError(error)
+        }
+
+        let mapper = ImageCollectionMapper()
+        let imageCollection = mapper.map(tmdbImageCollection)
+
+        return imageCollection
+    }
 
 }
 

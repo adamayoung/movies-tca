@@ -16,15 +16,18 @@ public struct PersonDetailsFeature: Sendable {
     @ObservableState
     public struct State {
         var id: Int
+        public let transitionID: String?
         var person: Person?
         var isLoading: Bool
 
         public init(
             id: Int,
+            transitionID: String? = nil,
             person: Person? = nil,
             isLoading: Bool = false
         ) {
             self.id = id
+            self.transitionID = transitionID
             self.person = person
             self.isLoading = isLoading
         }

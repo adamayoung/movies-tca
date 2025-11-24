@@ -37,7 +37,7 @@ struct MoviesRootFeature {
         Reduce { state, action in
             switch action {
             case .trending(.navigate(.movieDetails(let id))):
-                state.path.append(.details(MovieDetailsFeature.State(id: id)))
+                state.path.append(.details(MovieDetailsFeature.State(movieID: id)))
                 return .none
             default:
                 return .none

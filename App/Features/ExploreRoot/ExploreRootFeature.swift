@@ -40,14 +40,14 @@ struct ExploreRootFeature {
 
         Reduce { state, action in
             switch action {
-            case .explore(.navigate(.movieDetails(let id))):
-                state.path.append(.movieDetails(MovieDetailsFeature.State(id: id)))
+            case .explore(.navigate(.movieDetails(let id, let transitionID))):
+                state.path.append(.movieDetails(MovieDetailsFeature.State(movieID: id, transitionID: transitionID)))
                 return .none
-            case .explore(.navigate(.tvSeriesDetails(let id))):
-                state.path.append(.tvSeriesDetails(TVSeriesDetailsFeature.State(id: id)))
+            case .explore(.navigate(.tvSeriesDetails(let id, let transitionID))):
+                state.path.append(.tvSeriesDetails(TVSeriesDetailsFeature.State(id: id, transitionID: transitionID)))
                 return .none
-            case .explore(.navigate(.personDetails(let id))):
-                state.path.append(.personDetails(PersonDetailsFeature.State(id: id)))
+            case .explore(.navigate(.personDetails(let id, let transitionID))):
+                state.path.append(.personDetails(PersonDetailsFeature.State(id: id, transitionID: transitionID)))
                 return .none
             default:
                 return .none

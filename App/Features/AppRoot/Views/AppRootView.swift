@@ -50,7 +50,9 @@ struct AppRootView: View {
                 )
             }
         }
+        .preferredColorScheme(.dark)
     }
+
 }
 
 #Preview {

@@ -1,10 +1,11 @@
 //
 //  PersonPreview.swift
-//  CoreDomain
+//  TrendingDomain
 //
 //  Created by Adam Young on 10/06/2025.
 //
 
+import CoreDomain
 import Foundation
 
 public struct PersonPreview: Identifiable, Equatable, Sendable {

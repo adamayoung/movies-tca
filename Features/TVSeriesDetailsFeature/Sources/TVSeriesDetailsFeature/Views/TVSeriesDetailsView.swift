@@ -29,11 +29,18 @@ public struct TVSeriesDetailsView: View {
     public var body: some View {
         StretchyHeaderScrollView(
             header: {
-                header
+                BackdropImage(url: tvSeries?.backdropURL)
                     .flexibleHeaderContent(height: 600)
             },
+            headerOverlay: {
+                LogoImage(url: tvSeries?.logoURL)
+                    .padding(.bottom, 20)
+                    .frame(maxWidth: 300, maxHeight: 150, alignment: .bottom)
+            },
             content: {
-                content
+                Text(verbatim: tvSeries?.overview ?? "")
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal)
             }
         )
@@ -44,21 +51,6 @@ public struct TVSeriesDetailsView: View {
         .task {
             store.send(.loadTVSeries)
         }
-    }
-
-    @ViewBuilder private var header: some View {
-        BackdropImage(url: tvSeries?.backdropURL)
-            .overlay(alignment: .bottom) {
-                //                LogoImage(url: movie?.logoImage.originalURL)
-                //                    .padding(.bottom, 20)
-                //                    .frame(maxWidth: 300, maxHeight: 150, alignment: .bottom)
-            }
-    }
-
-    @ViewBuilder private var content: some View {
-        Text(verbatim: tvSeries?.overview ?? "")
-            .multilineTextAlignment(.leading)
-            .fixedSize(horizontal: false, vertical: true)
     }
 
 }

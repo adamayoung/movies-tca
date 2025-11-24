@@ -7,12 +7,15 @@
 
 import ComposableArchitecture
 import Foundation
+import MoviesAdapters
+import MoviesApplication
 import TrendingAdapters
 import TrendingApplication
 
 struct ExploreClient: Sendable {
 
     var fetchTrendingMovies: @Sendable () async throws -> [MoviePreview]
+    var fetchPopularMovies: @Sendable () async throws -> [MoviePreview]
     var fetchTrendingTVSeries: @Sendable () async throws -> [TVSeriesPreview]
     var fetchTrendingPeople: @Sendable () async throws -> [PersonPreview]
 
@@ -24,6 +27,12 @@ extension ExploreClient: DependencyKey {
         ExploreClient(
             fetchTrendingMovies: {
                 let useCase = DependencyValues._current.fetchTrendingMovies
+                let moviePreviews = try await useCase.execute()
+                let mapper = MoviePreviewMapper()
+                return moviePreviews.map(mapper.map)
+            },
+            fetchPopularMovies: {
+                let useCase = DependencyValues._current.fetchPopularMovies
                 let moviePreviews = try await useCase.execute()
                 let mapper = MoviePreviewMapper()
                 return moviePreviews.map(mapper.map)
@@ -61,6 +70,21 @@ extension ExploreClient: DependencyKey {
                         posterURL: URL(
                             string:
                                 "https://image.tmdb.org/t/p/w780/xUWUODKPIilQoFUzjHM6wKJkP3Y.jpg")
+                    )
+                ]
+            },
+            fetchPopularMovies: {
+                try await Task.sleep(for: .seconds(2))
+                return [
+                    MoviePreview(
+                        id: 1,
+                        title: "The Running Man",
+                        posterURL: URL(string: "https://image.tmdb.org/t/p/w780/dKL78O9zxczVgjtNcQ9UkbYLzqX.jpg")
+                    ),
+                    MoviePreview(
+                        id: 2,
+                        title: "Black Phone 2",
+                        posterURL: URL(string: "https://image.tmdb.org/t/p/w780/xUWUODKPIilQoFUzjHM6wKJkP3Y.jpg")
                     )
                 ]
             },

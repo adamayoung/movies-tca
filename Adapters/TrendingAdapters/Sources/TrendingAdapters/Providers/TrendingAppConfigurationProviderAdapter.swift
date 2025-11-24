@@ -1,15 +1,16 @@
 //
-//  AppConfigurationProviderAdapter.swift
-//  PeopleAdapters
+//  TrendingAppConfigurationProviderAdapter.swift
+//  TrendingAdapters
 //
 //  Created by Adam Young on 20/11/2025.
 //
 
 import CoreDomain
 import ConfigurationApplication
+import Foundation
 import TrendingDomain
 
-public struct AppConfigurationProviderAdapter: AppConfigurationProviding {
+public final class TrendingAppConfigurationProviderAdapter: AppConfigurationProviding {
 
     private let fetchUseCase: any FetchAppConfigurationUseCase
 

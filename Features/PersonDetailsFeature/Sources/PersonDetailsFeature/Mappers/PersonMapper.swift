@@ -23,6 +23,7 @@ struct PersonMapper {
         return Person(
             id: personDetails.id,
             name: personDetails.name,
+            biography: personDetails.biography,
             knownForDepartment: personDetails.knownForDepartment,
             gender: gender,
             profileURL: personDetails.profileURLSet?.detail

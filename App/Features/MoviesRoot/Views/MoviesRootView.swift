@@ -21,7 +21,8 @@ struct MoviesRootView: View {
                 store: store.scope(
                     state: \.trending,
                     action: \.trending
-                )
+                ),
+                transitionNamespace: namespace
             )
         } destination: { store in
             switch store.case {

@@ -37,6 +37,7 @@ extension PersonDetailsClient: DependencyKey {
                 return Person(
                     id: 2283,
                     name: "Stanley Tucci",
+                    biography: "Stanley Tucci Stanley Tucci Stanley Tucci Stanley Tucci Stanley Tucci",
                     knownForDepartment: "Acting",
                     gender: .male,
                     profileURL: URL(

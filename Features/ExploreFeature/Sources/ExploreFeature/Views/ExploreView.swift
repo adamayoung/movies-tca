@@ -14,21 +14,11 @@ public struct ExploreView: View {
     @Bindable var store: StoreOf<ExploreFeature>
     private let namespace: Namespace.ID
 
-    private var trendingMovies: [MoviePreview] {
-        store.trendingMovies.movies
-    }
-
-    private var trendingTVSeries: [TVSeriesPreview] {
-        store.trendingTVSeries.tvSeries
-    }
-
-    private var trendingPeople: [PersonPreview] {
-        store.trendingPeople.people
-    }
-
-    private var isLoading: Bool {
-        store.isInitiallyLoading
-    }
+    private var trendingMovies: [MoviePreview] { store.trendingMovies.movies }
+    private var popularMovies: [MoviePreview] { store.popularMovies.movies }
+    private var trendingTVSeries: [TVSeriesPreview] { store.trendingTVSeries.tvSeries }
+    private var trendingPeople: [PersonPreview] { store.trendingPeople.people }
+    private var isLoading: Bool { store.isInitiallyLoading}
 
     public init(
         store: StoreOf<ExploreFeature>,
@@ -43,9 +33,11 @@ public struct ExploreView: View {
             if !isLoading {
                 LazyVStack {
                     trendingMoviesSection
+                    popularMoviesSection
+
                     trendingTVSeriesSection
 
-                    Text("People: \(trendingPeople.count)")
+                    trendingPeopleSection
                 }
             }
         }
@@ -78,8 +70,28 @@ extension ExploreView {
             movies: trendingMovies,
             type: .poster,
             transitionNamespace: namespace,
-            didSelectMovie: { movie in
-                store.send(.navigate(.movieDetails(id: movie.id)))
+            didSelectMovie: { movie, transitionID in
+                store.send(.navigate(.movieDetails(id: movie.id, transitionID: transitionID)))
+            }
+        )
+    }
+    
+    @ViewBuilder private var popularMoviesSection: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text("POPULAR_MOVIES", bundle: .module)
+                .font(.title2)
+                .bold()
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 0)
+        .frame(maxWidth: .infinity, alignment: .leading)
+
+        MovieCarousel(
+            movies: popularMovies,
+            type: .backdrop,
+            transitionNamespace: namespace,
+            didSelectMovie: { movie, transitionID in
+                store.send(.navigate(.movieDetails(id: movie.id, transitionID: transitionID)))
             }
         )
     }
@@ -98,8 +110,27 @@ extension ExploreView {
             tvSeries: trendingTVSeries,
             type: .poster,
             transitionNamespace: namespace,
-            didSelectTVSeries: { tvSeries in
-                store.send(.navigate(.tvSeriesDetails(id: tvSeries.id)))
+            didSelectTVSeries: { tvSeries, transitionID in
+                store.send(.navigate(.tvSeriesDetails(id: tvSeries.id, transitionID: transitionID)))
+            }
+        )
+    }
+    
+    @ViewBuilder private var trendingPeopleSection: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text("TRENDING_PEOPLE", bundle: .module)
+                .font(.title2)
+                .bold()
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 0)
+        .frame(maxWidth: .infinity, alignment: .leading)
+
+        PersonCarousel(
+            people: trendingPeople,
+            transitionNamespace: namespace,
+            didSelectPerson: { person, transitionID in
+                store.send(.navigate(.personDetails(id: person.id, transitionID: transitionID)))
             }
         )
     }

@@ -27,5 +27,12 @@ public final class TVContainer {
             appConfigurationProvider: appConfigurationProvider
         )
     }
+    
+    public func makeFetchTVSeriesImageCollectionUseCase() -> some FetchTVSeriesImageCollectionUseCase {
+        DefaultFetchTVSeriesImageCollectionUseCase(
+            repository: tvSeriesRepository,
+            appConfigurationProvider: appConfigurationProvider
+        )
+    }
 
 }

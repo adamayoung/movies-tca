@@ -17,6 +17,7 @@ struct PersonDetailsMapper {
         return PersonDetails(
             id: person.id,
             name: person.name,
+            biography: person.biography,
             knownForDepartment: person.knownForDepartment,
             gender: person.gender,
             profileURLSet: profileURLSet

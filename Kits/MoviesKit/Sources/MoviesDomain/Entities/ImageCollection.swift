@@ -5,6 +5,7 @@
 //  Created by Adam Young on 03/06/2025.
 //
 
+import CoreDomain
 import Foundation
 
 public struct ImageCollection: Sendable {

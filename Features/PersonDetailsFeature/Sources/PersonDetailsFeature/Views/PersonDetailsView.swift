@@ -12,9 +12,14 @@ import SwiftUI
 public struct PersonDetailsView: View {
 
     @Bindable private var store: StoreOf<PersonDetailsFeature>
+    private let namespace: Namespace.ID
 
-    public init(store: StoreOf<PersonDetailsFeature>) {
+    public init(
+        store: StoreOf<PersonDetailsFeature>,
+        transitionNamespace: Namespace.ID
+    ) {
         self._store = .init(store)
+        self.namespace = transitionNamespace
     }
 
     public var body: some View {
@@ -42,17 +47,25 @@ public struct PersonDetailsView: View {
 
         Text(verbatim: person.name)
             .font(.title)
+        
+        Text(verbatim: person.biography)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 
 }
 
 #Preview {
-    PersonDetailsView(
-        store: Store(
-            initialState: PersonDetailsFeature.State(id: 1),
-            reducer: {
-                PersonDetailsFeature()
-            }
+    @Previewable @Namespace var namespace
+
+    NavigationStack {
+        PersonDetailsView(
+            store: Store(
+                initialState: PersonDetailsFeature.State(id: 1),
+                reducer: {
+                    PersonDetailsFeature()
+                }
+            ),
+            transitionNamespace: namespace
         )
-    )
+    }
 }

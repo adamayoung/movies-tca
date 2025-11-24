@@ -12,19 +12,26 @@ public final class TrendingContainer {
 
     private let trendingRepository: any TrendingRepository
     private let appConfigurationProvider: any AppConfigurationProviding
+    private let movieLogoImageProvider: any MovieLogoImageProviding
+    private let tvSeriesLogoImageProvider: any TVSeriesLogoImageProviding
 
     init(
         trendingRepository: some TrendingRepository,
-        appConfigurationProvider: some AppConfigurationProviding
+        appConfigurationProvider: some AppConfigurationProviding,
+        movieLogoImageProvider: some MovieLogoImageProviding,
+        tvSeriesLogoImageProvider: some TVSeriesLogoImageProviding
     ) {
         self.trendingRepository = trendingRepository
         self.appConfigurationProvider = appConfigurationProvider
+        self.movieLogoImageProvider = movieLogoImageProvider
+        self.tvSeriesLogoImageProvider = tvSeriesLogoImageProvider
     }
 
     public func makeFetchTrendingMoviesUseCase() -> some FetchTrendingMoviesUseCase {
         DefaultFetchTrendingMoviesUseCase(
             repository: trendingRepository,
-            appConfigurationProvider: appConfigurationProvider
+            appConfigurationProvider: appConfigurationProvider,
+            movieLogoImageProvider: movieLogoImageProvider
         )
     }
 

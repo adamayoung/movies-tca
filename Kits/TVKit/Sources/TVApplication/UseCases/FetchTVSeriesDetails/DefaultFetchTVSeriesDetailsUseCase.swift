@@ -24,10 +24,12 @@ final class DefaultFetchTVSeriesDetailsUseCase: FetchTVSeriesDetailsUseCase {
 
     func execute(id: Int) async throws(FetchTVSeriesDetailsError) -> TVSeriesDetails {
         let tvSeries: TVSeries
+        let imageCollection: ImageCollection
         let appConfiguration: AppConfiguration
         do {
-            (tvSeries, appConfiguration) = try await (
+            (tvSeries, imageCollection, appConfiguration) = try await (
                 repository.tvSeries(withID: id),
+                repository.images(forTVSeries: id),
                 appConfigurationProvider.appConfiguration()
             )
         } catch let error {
@@ -35,7 +37,11 @@ final class DefaultFetchTVSeriesDetailsUseCase: FetchTVSeriesDetailsUseCase {
         }
         
         let mapper = TVSeriesDetailsMapper()
-        let tvSeriesDetails = mapper.map(tvSeries, imagesConfiguration: appConfiguration.images)
+        let tvSeriesDetails = mapper.map(
+            tvSeries,
+            imageCollection: imageCollection,
+            imagesConfiguration: appConfiguration.images
+        )
         
         return tvSeriesDetails
     }

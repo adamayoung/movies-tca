@@ -13,13 +13,16 @@ final class DefaultFetchTrendingMoviesUseCase: FetchTrendingMoviesUseCase {
 
     private let repository: any TrendingRepository
     private let appConfigurationProvider: any AppConfigurationProviding
+    private let movieLogoImageProvider: any MovieLogoImageProviding
 
     init(
         repository: some TrendingRepository,
-        appConfigurationProvider: some AppConfigurationProviding
+        appConfigurationProvider: some AppConfigurationProviding,
+        movieLogoImageProvider: some MovieLogoImageProviding
     ) {
         self.repository = repository
         self.appConfigurationProvider = appConfigurationProvider
+        self.movieLogoImageProvider = movieLogoImageProvider
     }
 
     func execute() async throws(FetchTrendingMoviesError) -> [MoviePreviewDetails] {

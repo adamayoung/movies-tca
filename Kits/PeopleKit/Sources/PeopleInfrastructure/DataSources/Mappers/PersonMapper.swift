@@ -16,6 +16,7 @@ struct PersonMapper {
         PeopleDomain.Person(
             id: tmdbPerson.id,
             name: tmdbPerson.name,
+            biography: tmdbPerson.biography ?? "",
             knownForDepartment: tmdbPerson.knownForDepartment ?? "",
             gender: map(tmdbPerson.gender),
             profilePath: tmdbPerson.profilePath

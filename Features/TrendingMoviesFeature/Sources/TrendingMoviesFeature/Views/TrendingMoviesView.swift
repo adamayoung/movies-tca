@@ -12,6 +12,7 @@ import SwiftUI
 public struct TrendingMoviesView: View {
 
     @Bindable var store: StoreOf<TrendingMoviesFeature>
+    private let namespace: Namespace.ID
 
     private var movies: [MoviePreview] {
         store.movies
@@ -21,8 +22,12 @@ public struct TrendingMoviesView: View {
         store.isInitiallyLoading
     }
 
-    public init(store: StoreOf<TrendingMoviesFeature>) {
+    public init(
+        store: StoreOf<TrendingMoviesFeature>,
+        transitionNamespace: Namespace.ID
+    ) {
         self._store = .init(store)
+        self.namespace = transitionNamespace
     }
 
     public var body: some View {
@@ -51,12 +56,15 @@ public struct TrendingMoviesView: View {
 }
 
 #Preview {
+    @Previewable @Namespace var namespace
+    
     TrendingMoviesView(
         store: Store(
             initialState: TrendingMoviesFeature.State(),
             reducer: {
                 TrendingMoviesFeature()
             }
-        )
+        ),
+        transitionNamespace: namespace
     )
 }

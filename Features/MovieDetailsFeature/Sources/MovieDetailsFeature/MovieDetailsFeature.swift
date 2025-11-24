@@ -15,16 +15,19 @@ public struct MovieDetailsFeature: Sendable {
 
     @ObservableState
     public struct State {
-        var id: Int
+        var movieID: Int
+        public let transitionID: String?
         var movie: Movie?
         var isLoading: Bool
 
         public init(
-            id: Int,
+            movieID: Int,
+            transitionID: String? = nil,
             movie: Movie? = nil,
             isLoading: Bool = false
         ) {
-            self.id = id
+            self.movieID = movieID
+            self.transitionID = transitionID
             self.movie = movie
             self.isLoading = isLoading
         }
@@ -57,7 +60,7 @@ public struct MovieDetailsFeature: Sendable {
 extension MovieDetailsFeature {
 
     fileprivate func handleFetchMovie(_ state: inout State) -> EffectOf<Self> {
-        let id = state.id
+        let id = state.movieID
 
         return .run { send in
             do {

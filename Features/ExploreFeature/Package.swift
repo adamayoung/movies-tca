@@ -21,7 +21,9 @@ let package = Package(
     dependencies: [
         .package(path: "../../Core/DesignSystem"),
         .package(path: "../../Kits/TrendingKit"),
+        .package(path: "../../Kits/MoviesKit"),
         .package(path: "../../Adapters/TrendingAdapters"),
+        .package(path: "../../Adapters/MoviesAdapters"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", from: "1.23.1")
     ],
 
@@ -31,7 +33,9 @@ let package = Package(
             dependencies: [
                 "DesignSystem",
                 .product(name: "TrendingApplication", package: "TrendingKit"),
+                .product(name: "MoviesApplication", package: "MoviesKit"),
                 "TrendingAdapters",
+                "MoviesAdapters",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
             ]
         ),

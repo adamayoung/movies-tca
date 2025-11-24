@@ -10,27 +10,29 @@ import SwiftUI
 
 struct TVSeriesCarousel: View {
 
-    enum TVSeriesCarouselType: String {
+    enum CarouselType: String {
         case backdrop
         case poster
     }
 
     var tvSeries: [TVSeriesPreview]
-    var type: TVSeriesCarouselType
+    var type: CarouselType
     var transitionNamespace: Namespace.ID
-    var didSelectTVSeries: (TVSeriesPreview) -> Void
+    var didSelectTVSeries: (TVSeriesPreview, String) -> Void
 
     var body: some View {
         Carousel {
             ForEach(Array(tvSeries.enumerated()), id: \.offset) { offset, tvSeries in
+                let transitionID = TransitionID(tvSeries: tvSeries, carouselType: type).value
+                
                 switch type {
                 case .backdrop:
                     Button {
-                        didSelectTVSeries(tvSeries)
+                        didSelectTVSeries(tvSeries, transitionID)
                     } label: {
                         BackdropCarouselCell(
                             imageURL: tvSeries.backdropURL,
-                            transitionID: UUID(),
+                            transitionID: transitionID,
                             transitionNamespace: transitionNamespace
                         ) {
                             cellLabel(title: tvSeries.name, index: offset)
@@ -41,11 +43,11 @@ struct TVSeriesCarousel: View {
 
                 case .poster:
                     Button {
-                        didSelectTVSeries(tvSeries)
+                        didSelectTVSeries(tvSeries, transitionID)
                     } label: {
                         PosterCarouselCell(
                             imageURL: tvSeries.posterURL,
-                            transitionID: UUID(),
+                            transitionID: transitionID,
                             transitionNamespace: transitionNamespace
                         ) {
                             cellLabel(title: tvSeries.name, index: offset)
@@ -68,7 +70,7 @@ struct TVSeriesCarousel: View {
                 .foregroundStyle(Color.secondary)
 
             Text(verbatim: title)
-                .lineLimit(2)
+                .lineLimit(2, reservesSpace: true)
                 .multilineTextAlignment(.leading)
 
             Spacer()
@@ -77,23 +79,30 @@ struct TVSeriesCarousel: View {
     }
 
 }
-//
-//#Preview {
-//    @Previewable @Namespace var transitionNamespace
-//
-//    NavigationStack {
-//        ScrollView {
-//            MovieCarousel(
-//                movies: MovieListItemViewModel.previews,
-//                type: .backdrop,
-//                transitionNamespace: transitionNamespace
-//            )
-//
-//            MovieCarousel(
-//                movies: MovieListItemViewModel.previews,
-//                type: .poster,
-//                transitionNamespace: transitionNamespace
-//            )
-//        }
-//    }
-//}
+
+#Preview("Backdrops") {
+    @Previewable @Namespace var transitionNamespace
+
+    ScrollView {
+        TVSeriesCarousel(
+            tvSeries: TVSeriesPreview.mocks,
+            type: .backdrop,
+            transitionNamespace: transitionNamespace,
+            didSelectTVSeries: { _, _ in }
+        )
+    }
+}
+
+
+#Preview("Posters") {
+    @Previewable @Namespace var transitionNamespace
+
+    ScrollView {
+        TVSeriesCarousel(
+            tvSeries: TVSeriesPreview.mocks,
+            type: .poster,
+            transitionNamespace: transitionNamespace,
+            didSelectTVSeries: { _, _ in }
+        )
+    }
+}
